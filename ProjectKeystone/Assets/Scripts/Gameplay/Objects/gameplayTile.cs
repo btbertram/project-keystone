@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class gameplayTile : MonoBehaviour
+public class gameplayTile
 {
 
     public EGameplayTileMatchType tileMatchType;
     public bool isTileActive;
+    public int tileid;
 
-    // Start is called before the first frame update
-    void Start()
+    public gameplayTile(int id)
     {
         isTileActive = true;
         TileMatchTypeReroll();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        tileid = id;
     }
 
     void TileMatchTypeReroll()
