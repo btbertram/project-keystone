@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class puzzleState
+public class PuzzleState
 {
 
     public static System.Random rand = new System.Random();

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class gameplayTile
+public class PuzzleTile
 {
 
     public EGameplayTileMatchType tileMatchType;
     public bool isTileActive;
     public int tileid;
 
-    public gameplayTile(int id)
+    public PuzzleTile(int id)
     {
         isTileActive = true;
         TileMatchTypeReroll();
@@ -19,7 +19,7 @@ public class gameplayTile
 
     void TileMatchTypeReroll()
     {
-        tileMatchType = (EGameplayTileMatchType)puzzleState.rand.Next((int)EGameplayTileMatchType.square, (int)EGameplayTileMatchType.special);
+        tileMatchType = (EGameplayTileMatchType)PuzzleState.rand.Next((int)EGameplayTileMatchType.square, (int)EGameplayTileMatchType.special);
     }
 
 
