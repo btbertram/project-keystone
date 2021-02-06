@@ -15,7 +15,7 @@ public class PuzzleGameObject : MonoBehaviour
     public int puzzleSizeY;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         currentGameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
     }
@@ -23,7 +23,7 @@ public class PuzzleGameObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             int number = 0;
             int tilenumber = 0;
@@ -39,15 +39,19 @@ public class PuzzleGameObject : MonoBehaviour
 
             }
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Debug.Log(FindObjectOfType<PuzzleCursor>().gridPosX.ToString() + "" + FindObjectOfType<PuzzleCursor>().gridPosY.ToString());
+        }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            currentGameplayGrid.ShiftHorizontal(0, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentGameplayGrid.ShiftVertical(0, -1);
-        }
-        
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    currentGameplayGrid.ShiftHorizontal(0, 1);
+        //}
+        //if (Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    currentGameplayGrid.ShiftVertical(0, -1);
+        //}
+
     }
 }

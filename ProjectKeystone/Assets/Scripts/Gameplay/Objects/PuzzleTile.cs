@@ -6,7 +6,7 @@ using UnityEngine;
 public class PuzzleTile
 {
 
-    public EGameplayTileMatchType tileMatchType;
+    public EPuzzleTileMatchType tileMatchType;
     public bool isTileActive;
     public int tileid;
 
@@ -19,7 +19,7 @@ public class PuzzleTile
 
     void TileMatchTypeReroll()
     {
-        tileMatchType = (EGameplayTileMatchType)PuzzleState.rand.Next((int)EGameplayTileMatchType.square, (int)EGameplayTileMatchType.special);
+        tileMatchType = (EPuzzleTileMatchType)PuzzleState.rand.Next((int)EPuzzleTileMatchType.square, (int)EPuzzleTileMatchType.diamond);
     }
 
 

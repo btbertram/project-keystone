@@ -38,6 +38,7 @@ public class PuzzleGrid
     /// <param name="amount">The number of indexes to move data by.</param>
     public void ShiftHorizontal(int rowIndex, int amount)
     {
+        Debug.Log(Input.GetAxis(EInputAxis.Horizontal.ToString()) + " Grid Moved Horizontally");
 
         List<PuzzleTile> row = gameplayTiles[rowIndex];
 
@@ -80,6 +81,9 @@ public class PuzzleGrid
         ///Mutate selected index with prev value
         ///set prev value as next value 
         ///end loop after setting index 0
+
+        Debug.Log(Input.GetAxis(EInputAxis.Vertical.ToString()) + " Grid Moved Vertically");
+
 
         PuzzleTile nextTile;
         PuzzleTile prevTile;
