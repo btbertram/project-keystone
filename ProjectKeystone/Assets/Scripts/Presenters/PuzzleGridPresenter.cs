@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// A MonoBehaviour Class that handles and displays the visual components of the PuzzleGrid data class.
 /// </summary>
-public class GridPresenter : MonoBehaviour
+public class PuzzleGridPresenter : MonoBehaviour
 {
     public int gridSpacing;
     public float lineThickness;
@@ -22,6 +22,14 @@ public class GridPresenter : MonoBehaviour
     void Update()
     {
         
+    }
+
+    /// <summary>
+    /// Moves Camera view to an appropriate viewpoint after the Presenters finish positioning.
+    /// </summary>
+    public void PositionCamera()
+    {
+
     }
 
     /// <summary>
@@ -47,7 +55,8 @@ public class GridPresenter : MonoBehaviour
 
         //Clear Vector
         pos = Vector3.zero;
-
+        
+        pos.y = (gridSpacing * puzzleSizeY);
         for (int x = 0; x < puzzleSizeX+1; x++)
         {
             pos.x = (gridSpacing * x);
@@ -55,8 +64,5 @@ public class GridPresenter : MonoBehaviour
             gameObject.transform.localScale = lineScaleX;
         }
 
-        //Instance new sprite
-        //Multiply scale by puzzle size
-        //Position based on loop number
     }
 }
