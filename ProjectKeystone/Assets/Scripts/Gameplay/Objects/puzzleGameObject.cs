@@ -10,14 +10,28 @@ public class PuzzleGameObject : MonoBehaviour
 {
     public PuzzleState currentPuzzleState;
     public PuzzleGrid currentGameplayGrid;
+    public PuzzleCursor currentPuzzleCursor;
+    public Camera mainCamera;
 
-    public int puzzleSizeX;
-    public int puzzleSizeY;
+    int defaultCameraSize = 5;
+
+    [Range(1,20)] public int puzzleSizeX;
+    [Range(1,20)] public int puzzleSizeY;
 
     // Start is called before the first frame update
     void Awake()
     {
         currentGameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
+        mainCamera = FindObjectOfType<Camera>();
+    }
+
+    void Start()
+    {
+        float gridspacing = FindObjectOfType<PuzzleGridPresenter>().gridSpacing;
+        //center the camera on the puzzle grid, keep same layer for camera
+        mainCamera.transform.position = new Vector3(((float)puzzleSizeX/2) * gridspacing, ((float)puzzleSizeY/2) * gridspacing, mainCamera.transform.position.z);
+        int newSizeCamera = Mathf.Max(puzzleSizeX, puzzleSizeY);
+        mainCamera.orthographicSize = (((float)newSizeCamera / 2) * gridspacing) + 2.5f;
     }
 
     // Update is called once per frame
@@ -41,17 +55,8 @@ public class PuzzleGameObject : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            Debug.Log(FindObjectOfType<PuzzleCursor>().gridPosX.ToString() + "" + FindObjectOfType<PuzzleCursor>().gridPosY.ToString());
+            Debug.Log(currentPuzzleCursor.gridPosX.ToString() + "" + currentPuzzleCursor.gridPosY.ToString());
         }
-
-        //if (Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //    currentGameplayGrid.ShiftHorizontal(0, 1);
-        //}
-        //if (Input.GetKeyDown(KeyCode.DownArrow))
-        //{
-        //    currentGameplayGrid.ShiftVertical(0, -1);
-        //}
 
     }
 }

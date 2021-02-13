@@ -19,7 +19,7 @@ public class PuzzleTile
 
     void TileMatchTypeReroll()
     {
-        tileMatchType = (EPuzzleTileMatchType)PuzzleState.rand.Next((int)EPuzzleTileMatchType.square, (int)EPuzzleTileMatchType.diamond+1);
+        tileMatchType = (EPuzzleTileMatchType)GameManager.rand.Next((int)EPuzzleTileMatchType.square, (int)EPuzzleTileMatchType.diamond+1);
     }
 
 

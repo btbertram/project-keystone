@@ -215,31 +215,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 885985200}
-  - component: {fileID: 885985199}
   - component: {fileID: 885985201}
-  - component: {fileID: 885985202}
-  - component: {fileID: 885985203}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &885985199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885985198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e378dff18c291b4aa8500cc33dbdcc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puzzleSizeX: 25
-  puzzleSizeY: 25
 --- !u!4 &885985200
 Transform:
   m_ObjectHideFlags: 0
@@ -266,31 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4732174e4c62940ae8b95865d2c4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &885985202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885985198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328cc8c54871fe14e84eae5cf22f6984, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &885985203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885985198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5373c9d041362b841a054fa44bea40d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLockedIn: 0
 --- !u!1 &1111990452
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,9 +259,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1111990454}
   - component: {fileID: 1111990453}
-  - component: {fileID: 1111990455}
   m_Layer: 0
-  m_Name: GridTest
+  m_Name: PuzzleGridPresenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -321,8 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b967c37db78386747a0e17ad834531af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSpacing: 1
-  lineThickness: 0.1
+  gridSpacing: 2
+  lineThickness: 0.2
   GridLinePrefab: {fileID: 4379399371247462287, guid: e176dc288171b6d4393be696d5ce8ee8, type: 3}
 --- !u!4 &1111990454
 Transform:
@@ -336,15 +293,78 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1111990455
+--- !u!1 &1417490275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1417490277}
+  - component: {fileID: 1417490276}
+  m_Layer: 0
+  m_Name: PuzzleGameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1417490276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111990452}
+  m_GameObject: {fileID: 1417490275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e378dff18c291b4aa8500cc33dbdcc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  puzzleSizeX: 10
+  puzzleSizeY: 10
+--- !u!4 &1417490277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417490275}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.564621, y: 12.112379, z: -167.40912}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1968945989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1968945991}
+  - component: {fileID: 1968945990}
+  m_Layer: 0
+  m_Name: PuzzleTilePresenterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1968945990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968945989}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 928b7ca73206d7e41b2d4b629b85ec2b, type: 3}
@@ -360,3 +380,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 26edfe5f44098f14cb5ac34e706e2f6b, type: 3}
   - {fileID: 21300000, guid: 9d592f46b145d3d43b8dc811aec2ea19, type: 3}
   - {fileID: 0}
+--- !u!4 &1968945991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968945989}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.564621, y: 12.112379, z: -167.40912}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

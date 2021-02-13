@@ -18,20 +18,6 @@ public class PuzzleGridPresenter : MonoBehaviour
         GenerateGridSprites(puzzle.puzzleSizeX, puzzle.puzzleSizeY);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    /// <summary>
-    /// Moves Camera view to an appropriate viewpoint after the Presenters finish positioning.
-    /// </summary>
-    public void PositionCamera()
-    {
-
-    }
-
     /// <summary>
     /// Creates a visual representation of the Grid.
     /// </summary>

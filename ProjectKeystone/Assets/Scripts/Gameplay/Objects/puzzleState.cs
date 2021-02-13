@@ -5,9 +5,6 @@ using UnityEngine;
 public class PuzzleState
 {
 
-    public static System.Random rand = new System.Random();
-
-
     // Start is called before the first frame update
     void Start()
     {

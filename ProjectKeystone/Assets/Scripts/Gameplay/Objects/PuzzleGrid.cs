@@ -10,11 +10,29 @@ public class PuzzleGrid
 
     public List<List<PuzzleTile>> gameplayTiles;
 
-
+    /// <summary>
+    /// PuzzleGrid Constructor.
+    /// </summary>
+    /// <param name="xsize">Length of the grid row. Any int greater than 0.</param>
+    /// <param name="ysize">Hieght of the grid column. Any int greater than 0.</param>
     public PuzzleGrid(int xsize, int ysize)
     {
-        _gridsizex = xsize;
-        _gridsizey = ysize;
+        if (xsize > 0)
+        {
+            _gridsizex = xsize;
+        }
+        else
+        {
+            _gridsizex = 1;
+        }
+        if(ysize > 0)
+        {
+            _gridsizey = ysize;
+        }
+        else
+        {
+            _gridsizey = 1;
+        }
         int tilenumber = -1;
         gameplayTiles = new List<List<PuzzleTile>>();
         for (int y = 0; y < ysize; y++)

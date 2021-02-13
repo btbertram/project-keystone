@@ -50,7 +50,7 @@ public class PuzzleTilePresenterManager : MonoBehaviour
                 pos.x = (gridSpacing * x + xyscaling);
                 GameObject gameObject = Instantiate(puzzleTilePrefab, pos, quaternion);
                 gameObject.transform.localScale = scale;
-                gameObject.GetComponentInChildren<PuzzleTilePresenter>().AssignTile(x, y);
+                gameObject.GetComponentInChildren<PuzzleTilePresenter>().AssignTile(y, x);
                 gameObject.GetComponentInChildren<PuzzleTilePresenter>().AppearanceSync();
             }
         }

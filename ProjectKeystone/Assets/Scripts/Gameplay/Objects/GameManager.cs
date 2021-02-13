@@ -9,6 +9,7 @@ using UnityEngine;
 public sealed class GameManager : MonoBehaviour
 {
     public static GameObject StaticGameStateInstance;
+    public static System.Random rand = new System.Random();
 
     public void Awake()
     {

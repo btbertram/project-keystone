@@ -6,47 +6,23 @@ using UnityEngine;
 /// A gameplay object that represents which index/list of the grid the player will interact with when controlling it.
 /// TODO: Change any getkeys to getbuttons when controls are setup
 /// </summary>
-public class PuzzleCursor : MonoBehaviour
+public class PuzzleCursor
 {
-
     public int gridPosX { get; set; }
     public int gridPosY { get; set; }
-    int puzzleSizeX;
-    int puzzleSizeY;
+    int _puzzleSizeX;
+    int _puzzleSizeY;
     public bool isLockedIn = false;
     bool isFocused = false;
 
 
-    // Start is called before the first frame update
-    void Start()
+    public PuzzleCursor(int puzzleSizeX, int puzzleSizeY)
     {
-        PuzzleGameObject puzzle = FindObjectOfType<PuzzleGameObject>();
-
-        puzzleSizeX = puzzle.puzzleSizeX;
-        puzzleSizeY = puzzle.puzzleSizeY;
+        _puzzleSizeX = puzzleSizeX;
+        _puzzleSizeY = puzzleSizeY;
         gridPosX = 0;
         gridPosY = 0;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    /// <summary>
-    /// Calls functions which check for cursor movement input if the PuzzleCursor is the current mode of control.
-    /// </summary>
-    //public void CursorControlCatch()
-    //{
-    //    if (isFocused)
-    //    {
-    //        MoveHorizontal();
-    //        MoveVertical();
-    //    }
-    //}
-
-
 
     /// <summary>
     /// Toggles if the cursor is moving itself, or the tiles.
@@ -66,7 +42,7 @@ public class PuzzleCursor : MonoBehaviour
         {
             gridPosX += 1;
             //loop back to start if needed
-            if(gridPosX >= puzzleSizeX)
+            if(gridPosX >= _puzzleSizeX)
             {
                 gridPosX = 0;
             }
@@ -77,7 +53,7 @@ public class PuzzleCursor : MonoBehaviour
             if(gridPosX < 0)
             {
                 //loop to end if needed
-                gridPosX = puzzleSizeX - 1;
+                gridPosX = _puzzleSizeX - 1;
             }
         }
     }
@@ -93,7 +69,7 @@ public class PuzzleCursor : MonoBehaviour
         if (amount < 0)
         {
             gridPosY += 1;
-            if(gridPosY >= puzzleSizeY)
+            if(gridPosY >= _puzzleSizeY)
             {
                 gridPosY = 0;
             }
@@ -104,7 +80,7 @@ public class PuzzleCursor : MonoBehaviour
             gridPosY -= 1;
             if(gridPosY < 0)
             {
-                gridPosY = puzzleSizeY - 1;
+                gridPosY = _puzzleSizeY - 1;
             }
         }
     }

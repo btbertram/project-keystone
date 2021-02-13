@@ -20,18 +20,6 @@ public class PuzzleTilePresenter : MonoBehaviour
         puzzleTilePresenterManager = FindObjectOfType<PuzzleTilePresenterManager>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Assigns an existing PuzzleTile reference to this TilePresenter.
     /// </summary>

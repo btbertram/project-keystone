@@ -17,9 +17,9 @@ public class GridController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentPuzzleGrid = GameObject.FindObjectOfType<PuzzleGameObject>().currentGameplayGrid;
-        currentPuzzleState = GameObject.FindObjectOfType<PuzzleGameObject>().currentPuzzleState;
-        currentPuzzleCursor = FindObjectOfType<PuzzleCursor>();
+        currentPuzzleGrid = FindObjectOfType<PuzzleGameObject>().currentGameplayGrid;
+        currentPuzzleState = FindObjectOfType<PuzzleGameObject>().currentPuzzleState;
+        currentPuzzleCursor = FindObjectOfType<PuzzleGameObject>().currentPuzzleCursor;
     }
 
     // Update is called once per frame
