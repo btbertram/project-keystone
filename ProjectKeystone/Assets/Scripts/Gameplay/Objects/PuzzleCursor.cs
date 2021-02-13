@@ -13,7 +13,7 @@ public class PuzzleCursor
     int _puzzleSizeX;
     int _puzzleSizeY;
     public bool isLockedIn = false;
-    bool isFocused = false;
+    //bool isFocused = false;
 
 
     public PuzzleCursor(int puzzleSizeX, int puzzleSizeY)

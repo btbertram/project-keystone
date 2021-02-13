@@ -13,8 +13,6 @@ public class PuzzleGameObject : MonoBehaviour
     public PuzzleCursor currentPuzzleCursor;
     public Camera mainCamera;
 
-    int defaultCameraSize = 5;
-
     [Range(1,20)] public int puzzleSizeX;
     [Range(1,20)] public int puzzleSizeY;
 
@@ -22,6 +20,7 @@ public class PuzzleGameObject : MonoBehaviour
     void Awake()
     {
         currentGameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
+        currentPuzzleCursor = new PuzzleCursor(puzzleSizeX, puzzleSizeY);
         mainCamera = FindObjectOfType<Camera>();
     }
 

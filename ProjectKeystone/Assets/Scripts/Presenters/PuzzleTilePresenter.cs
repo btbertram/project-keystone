@@ -25,7 +25,6 @@ public class PuzzleTilePresenter : MonoBehaviour
     /// </summary>
     public void AssignTile(int rowIndex, int columnIndex)
     {
-        Debug.Log(puzzle);
         assocatedTile = puzzle.currentGameplayGrid.gameplayTiles[rowIndex][columnIndex];
         //We'll want to call this on a confirmed move. Right now, that's after every move.
     }
