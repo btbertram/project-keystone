@@ -11,7 +11,8 @@ public class PuzzleGameObject : MonoBehaviour
     public PuzzleState currentPuzzleState;
     public PuzzleGrid currentGameplayGrid;
     public PuzzleCursor currentPuzzleCursor;
-    public Camera mainCamera;
+    public float cameraEdgeSpace = 2.5f;
+    Camera mainCamera;
 
     [Range(1,20)] public int puzzleSizeX;
     [Range(1,20)] public int puzzleSizeY;
@@ -30,7 +31,7 @@ public class PuzzleGameObject : MonoBehaviour
         //center the camera on the puzzle grid, keep same layer for camera
         mainCamera.transform.position = new Vector3(((float)puzzleSizeX/2) * gridspacing, ((float)puzzleSizeY/2) * gridspacing, mainCamera.transform.position.z);
         int newSizeCamera = Mathf.Max(puzzleSizeX, puzzleSizeY);
-        mainCamera.orthographicSize = (((float)newSizeCamera / 2) * gridspacing) + 2.5f;
+        mainCamera.orthographicSize = (((float)newSizeCamera / 2) * gridspacing) + cameraEdgeSpace;
     }
 
     // Update is called once per frame
@@ -40,17 +41,20 @@ public class PuzzleGameObject : MonoBehaviour
         {
             int number = 0;
             int tilenumber = 0;
-            foreach (List<PuzzleTile> row in currentGameplayGrid.gameplayTiles)
-            {
-                number++;
-                Debug.Log(row + " Number:" + number.ToString());
-                foreach (PuzzleTile tile in row)
-                {
-                    tilenumber++;
-                    Debug.Log(tile + " TileID:" + tile.tileid.ToString());
-                }
 
+            for(int y = 0; y < puzzleSizeY; y++)
+            {
+                Debug.Log("Grid Row Number: " + number.ToString());
+                number++;
+
+                for(int x = 0; x < puzzleSizeX; x++)
+                {
+                    PuzzleTile tile = currentGameplayGrid._gridPuzzleTiles[tilenumber];
+                    Debug.Log(tile + " TileID:" + tile._tileid.ToString());
+                    tilenumber++;
+                }
             }
+
         }
         if (Input.GetKeyDown(KeyCode.O))
         {

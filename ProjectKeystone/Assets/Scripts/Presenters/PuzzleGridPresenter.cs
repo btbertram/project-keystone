@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PuzzleGridPresenter : MonoBehaviour
 {
-    public int gridSpacing;
+    public float gridSpacing;
     public float lineThickness;
     public GameObject GridLinePrefab;
     // Start is called before the first frame update
@@ -34,19 +34,19 @@ public class PuzzleGridPresenter : MonoBehaviour
 
         for (int y = 0; y < puzzleSizeY+1; y++)
         {
-            pos.y = (gridSpacing * y);
-            GameObject gameObject = Instantiate(GridLinePrefab, pos, rotation);
+            pos.y = gridSpacing * y;
+            GameObject gameObject = Instantiate(GridLinePrefab, pos, rotation, this.transform);
             gameObject.transform.localScale = lineScaleY;
         }
 
         //Clear Vector
         pos = Vector3.zero;
         
-        pos.y = (gridSpacing * puzzleSizeY);
+        pos.y = gridSpacing * puzzleSizeY;
         for (int x = 0; x < puzzleSizeX+1; x++)
         {
             pos.x = (gridSpacing * x);
-            GameObject gameObject = Instantiate(GridLinePrefab, pos, quaternion);
+            GameObject gameObject = Instantiate(GridLinePrefab, pos, quaternion, this.transform);
             gameObject.transform.localScale = lineScaleX;
         }
 

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A data-based gameplay object which represents a grid. Contains a list of PuzzleTiles used for gameplay logic.
+/// </summary>
 public class PuzzleGrid
 {
 
     private int _gridsizex;
     private int _gridsizey;
 
-    public List<List<PuzzleTile>> gameplayTiles;
+    public List<PuzzleTile> _gridPuzzleTiles;
 
     /// <summary>
     /// PuzzleGrid Constructor.
@@ -33,18 +36,18 @@ public class PuzzleGrid
         {
             _gridsizey = 1;
         }
-        int tilenumber = -1;
-        gameplayTiles = new List<List<PuzzleTile>>();
+
+        int tilenumber = 0;
+        _gridPuzzleTiles = new List<PuzzleTile>();
+
         for (int y = 0; y < ysize; y++)
         {
-            List<PuzzleTile> tileListConstruct = new List<PuzzleTile>();
-            for(int x = 0; x < xsize; x++)
+            for (int x = 0; x < xsize; x++)
             {
+                PuzzleTile tile = new PuzzleTile(tilenumber,x,y);
+                _gridPuzzleTiles.Add(tile);
                 tilenumber++;
-                PuzzleTile tile = new PuzzleTile(tilenumber);
-                tileListConstruct.Add(tile);
             }
-            gameplayTiles.Add(tileListConstruct);
         }
 
     }
@@ -58,28 +61,30 @@ public class PuzzleGrid
     {
         Debug.Log(Input.GetAxis(EInputAxis.Horizontal.ToString()) + " Grid Moved Horizontally");
 
-        List<PuzzleTile> row = gameplayTiles[rowIndex];
-
         PuzzleTile nextTile;
-        PuzzleTile prevTile;
-        prevTile = row[0];
+        PuzzleTile currentTile;
+        int indexRowOffset = rowIndex * _gridsizex;
+        //selected row, first column
+        currentTile = _gridPuzzleTiles[indexRowOffset];
         int x = 0;
         do
         {
             x += amount;
-            if (x >= row.Count)
+            if (x >= _gridsizex)
             {
-                x -= row.Count;
+                x -= _gridsizex;
             }
             else if (x < 0)
             {
-                x += row.Count;
+                x += _gridsizex;
             }
-            nextTile = row[x];
-            row[x] = prevTile;
-            prevTile = nextTile;
 
-        } while (x != 0);       
+            nextTile = _gridPuzzleTiles[indexRowOffset + x];
+            currentTile._gridPosX = x;
+            _gridPuzzleTiles[indexRowOffset + x] = currentTile;
+            currentTile = nextTile;
+
+        } while (x != 0);
 
     }
 
@@ -104,30 +109,28 @@ public class PuzzleGrid
 
 
         PuzzleTile nextTile;
-        PuzzleTile prevTile;
-        //First row, selected column
-        prevTile = gameplayTiles[0][columnIndex];
-        int y = 0;
+        PuzzleTile currentTile;
 
+        //First row, selected column
+        currentTile = _gridPuzzleTiles[columnIndex];
+        int y = 0;
         do
         {
-            // -= is used due to the grid being starting/reading left/right top/bottom instead of left/right bottom/top (think coorinate systems)
-            y -= amount;
-            if (y >= gameplayTiles.Count)
+            y += amount;
+            if (y >= _gridsizey)
             {
-                y -= gameplayTiles.Count;
+                y -= _gridsizey;
             }
             else if (y < 0)
             {
-                y += gameplayTiles.Count;
+                y += _gridsizey;
             }
-            nextTile = gameplayTiles[y][columnIndex];
-            gameplayTiles[y][columnIndex] = prevTile;
-            prevTile = nextTile;
+            nextTile = _gridPuzzleTiles[columnIndex + y * _gridsizex];
+            currentTile._gridPosY = y;
+            _gridPuzzleTiles[columnIndex + y * _gridsizex] = currentTile;
+            currentTile = nextTile;
 
         } while (y != 0);
-
-
     }
 
 }

@@ -8,13 +8,17 @@ public class PuzzleTile
 
     public EPuzzleTileMatchType tileMatchType;
     public bool isTileActive;
-    public int tileid;
+    public int _tileid;
+    public int _gridPosX;
+    public int _gridPosY;
 
-    public PuzzleTile(int id)
+    public PuzzleTile(int tileid, int gridPosX, int gridPosY)
     {
         isTileActive = true;
         TileMatchTypeReroll();
-        tileid = id;
+        _tileid = tileid;
+        _gridPosX = gridPosX;
+        _gridPosY = gridPosY;
     }
 
     void TileMatchTypeReroll()

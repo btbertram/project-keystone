@@ -47,7 +47,7 @@ public class PuzzleCursor
                 gridPosX = 0;
             }
         }
-        if (amount < 0)
+        else if (amount < 0)
         {
             gridPosX -= 1;
             if(gridPosX < 0)
@@ -64,9 +64,7 @@ public class PuzzleCursor
     public void MoveVertical(float amount)
     {
         Debug.Log(Input.GetAxis(EInputAxis.Vertical.ToString()) + " Cursor Moved Vertically");
-        //Recall that origin is top left, positive means moving a row down.
-        //To Move down in the grid, we must add to y.
-        if (amount < 0)
+        if (amount > 0)
         {
             gridPosY += 1;
             if(gridPosY >= _puzzleSizeY)
@@ -75,7 +73,7 @@ public class PuzzleCursor
             }
 
         }
-        if (amount > 0)
+        else if (amount < 0)
         {
             gridPosY -= 1;
             if(gridPosY < 0)

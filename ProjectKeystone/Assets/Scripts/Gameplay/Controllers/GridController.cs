@@ -30,6 +30,11 @@ public class GridController : MonoBehaviour
             MoveCursor();
         }
 
+        if (Input.GetButtonDown(EInputAxis.Submit.ToString()))
+        {
+            Debug.Log("Submit Hit");
+        }
+
     }
 
     private void ShiftGrid()
@@ -41,24 +46,29 @@ public class GridController : MonoBehaviour
             {
                 currentPuzzleGrid.ShiftHorizontal(currentPuzzleCursor.gridPosY, 1);
             }
-            if (axisVal < 0)
+            else if (axisVal < 0)
             {
                 currentPuzzleGrid.ShiftHorizontal(currentPuzzleCursor.gridPosY, -1);
             }
 
         }
-        if (Input.GetButtonDown(EInputAxis.Vertical.ToString()))
+        else if (Input.GetButtonDown(EInputAxis.Vertical.ToString()))
         {
             float axisVal = Input.GetAxis(EInputAxis.Vertical.ToString());
             if (axisVal > 0)
             {
-                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.gridPosY, 1);
+                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.gridPosX, 1);
             }
-            if (axisVal < 0)
+            else if (axisVal < 0)
             {
-                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.gridPosY, -1);
+                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.gridPosX, -1);
 
             }
+        }
+        PuzzleTilePresenter[] test = FindObjectsOfType<PuzzleTilePresenter>();
+        foreach(PuzzleTilePresenter presenter in test)
+        {
+            presenter.PositionSync();
         }
     }
 
@@ -67,17 +77,13 @@ public class GridController : MonoBehaviour
         if (Input.GetButtonDown(EInputAxis.Horizontal.ToString()))
         {
             currentPuzzleCursor.MoveHorizontal(Input.GetAxis(EInputAxis.Horizontal.ToString()));
+
         }
         if (Input.GetButtonDown(EInputAxis.Vertical.ToString()))
         {
             currentPuzzleCursor.MoveVertical(Input.GetAxis(EInputAxis.Vertical.ToString()));
         }
-
-        if (Input.GetButtonDown(EInputAxis.Submit.ToString()))
-        {
-            //currentPuzzleCursor.CursorSelectToggle();
-            Debug.Log("Submit Hit");
-        }
+        FindObjectOfType<PuzzleCursorPresenter>().PositionSync();
     }
 
 

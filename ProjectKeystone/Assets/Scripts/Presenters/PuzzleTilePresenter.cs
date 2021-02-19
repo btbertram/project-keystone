@@ -11,6 +11,7 @@ public class PuzzleTilePresenter : MonoBehaviour
     PuzzleTilePresenterManager puzzleTilePresenterManager;
     SpriteRenderer spriteRenderer;
     PuzzleGameObject puzzle;
+    float _currentGridSpacing;
 
     void Awake()
     {
@@ -20,21 +21,27 @@ public class PuzzleTilePresenter : MonoBehaviour
         puzzleTilePresenterManager = FindObjectOfType<PuzzleTilePresenterManager>();
     }
 
+    void Start()
+    {
+        _currentGridSpacing = FindObjectOfType<PuzzleGridPresenter>().gridSpacing; ;
+    }
+
     /// <summary>
     /// Assigns an existing PuzzleTile reference to this TilePresenter.
     /// </summary>
-    public void AssignTile(int rowIndex, int columnIndex)
+    public void AssignTile(int columnIndex, int rowIndex)
     {
-        assocatedTile = puzzle.currentGameplayGrid.gameplayTiles[rowIndex][columnIndex];
+        assocatedTile = puzzle.currentGameplayGrid._gridPuzzleTiles[columnIndex + rowIndex * puzzle.puzzleSizeX];
         //We'll want to call this on a confirmed move. Right now, that's after every move.
     }
 
     /// <summary>
     /// Moves this TilePresenter's GameObject in world space.
     /// </summary>
-    public void Move()
+    public void PositionSync()
     {
-        
+        Vector3 newPos = new Vector3(assocatedTile._gridPosX * _currentGridSpacing + .5f, assocatedTile._gridPosY * _currentGridSpacing + .5f, 5);
+        this.transform.position = newPos;
     }
 
     /// <summary>
