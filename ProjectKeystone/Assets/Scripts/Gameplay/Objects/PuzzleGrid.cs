@@ -38,7 +38,7 @@ public class PuzzleGrid
         }
 
         int tilenumber = 0;
-        _gridPuzzleTiles = new List<PuzzleTile>();
+        _gridPuzzleTiles = new List<PuzzleTile>(xsize * ysize + 1);
 
         for (int y = 0; y < ysize; y++)
         {
@@ -50,9 +50,13 @@ public class PuzzleGrid
             }
         }
 
+        //Additional Entry for data manipulation/movement
+        PuzzleTile workTile = new PuzzleTile(-1, -1, -1);
+        _gridPuzzleTiles.Add(workTile);
+
     }
     /// <summary>
-    /// Shifts gameplayTile objects in a gameplayTile List by the amount given, looping around to the other end if necessary.
+    /// Shifts gameplayTile objects in a gameplayTile List "grid" by the amount given, looping around to the "other end" if necessary.
     /// Positive amount implies movement to the right, Negitive amount implies movement to the left.
     /// </summary>
     /// <param name="rowIndex">The index corresponding to the row in the grid to have data moved.</param>
@@ -61,11 +65,8 @@ public class PuzzleGrid
     {
         Debug.Log(Input.GetAxis(EInputAxis.Horizontal.ToString()) + " Grid Moved Horizontally");
 
-        PuzzleTile nextTile;
-        PuzzleTile currentTile;
+        int spareIndex = _gridPuzzleTiles.Count - 1;
         int indexRowOffset = rowIndex * _gridsizex;
-        //selected row, first column
-        currentTile = _gridPuzzleTiles[indexRowOffset];
         int x = 0;
         do
         {
@@ -79,40 +80,31 @@ public class PuzzleGrid
                 x += _gridsizex;
             }
 
-            nextTile = _gridPuzzleTiles[indexRowOffset + x];
-            currentTile._gridPosX = x;
-            _gridPuzzleTiles[indexRowOffset + x] = currentTile;
-            currentTile = nextTile;
+            //Target to spare
+            _gridPuzzleTiles[spareIndex] = _gridPuzzleTiles[indexRowOffset + x];
+            //First to target
+            _gridPuzzleTiles[indexRowOffset + x] = _gridPuzzleTiles[indexRowOffset];
+            _gridPuzzleTiles[indexRowOffset + x]._gridPosX = x;
+            //spare to first
+            _gridPuzzleTiles[indexRowOffset] = _gridPuzzleTiles[spareIndex];
 
         } while (x != 0);
 
     }
 
     /// <summary>
-    /// Shifts PuzzleTile objects in a PuzzleTile List to another list in the "grid," based on the amount given, looping around if necessary.
+    /// Shifts PuzzleTile objects in a PuzzleTile List to another index in the "grid," based on the amount given, looping around if necessary.
     /// Positive amount implies movement "up", while negitive amount implies movement "down".
     /// </summary>
     /// <param name="columnIndex">The index to be used to access tiles in each of the rows.</param>
     /// <param name="amount">The number of indexes to move data by.</param>
     public void ShiftVertical(int columnIndex, int amount)
     {
-        ///put index 0 into prev
-        ///Start at index 0
-        ///loop
-        ///change index selector by amount
-        ///Save value at selected index in next value
-        ///Mutate selected index with prev value
-        ///set prev value as next value 
-        ///end loop after setting index 0
 
         Debug.Log(Input.GetAxis(EInputAxis.Vertical.ToString()) + " Grid Moved Vertically");
 
-
-        PuzzleTile nextTile;
-        PuzzleTile currentTile;
-
-        //First row, selected column
-        currentTile = _gridPuzzleTiles[columnIndex];
+        int spareIndex = _gridPuzzleTiles.Count - 1;
+        int targetIndex = 0;
         int y = 0;
         do
         {
@@ -125,10 +117,16 @@ public class PuzzleGrid
             {
                 y += _gridsizey;
             }
-            nextTile = _gridPuzzleTiles[columnIndex + y * _gridsizex];
-            currentTile._gridPosY = y;
-            _gridPuzzleTiles[columnIndex + y * _gridsizex] = currentTile;
-            currentTile = nextTile;
+
+            targetIndex = columnIndex + y * _gridsizex;
+
+            //Target to Spare
+            _gridPuzzleTiles[spareIndex] = _gridPuzzleTiles[targetIndex];
+            //First to Target
+            _gridPuzzleTiles[targetIndex] = _gridPuzzleTiles[columnIndex];
+            _gridPuzzleTiles[targetIndex]._gridPosY = y;
+            //Spare to First
+            _gridPuzzleTiles[columnIndex] = _gridPuzzleTiles[spareIndex];
 
         } while (y != 0);
     }
