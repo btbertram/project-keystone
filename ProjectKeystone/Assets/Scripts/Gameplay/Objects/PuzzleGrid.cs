@@ -54,7 +54,104 @@ public class PuzzleGrid
         PuzzleTile workTile = new PuzzleTile(-1, -1, -1);
         _gridPuzzleTiles.Add(workTile);
 
+        SetTileChildren(_gridPuzzleTiles);
     }
+
+
+    void SetTileChildren(List<PuzzleTile> puzzleTiles)
+    {
+        int count = puzzleTiles.Count - 1;
+        int rowOffset;
+        int currentTileIndex;
+
+        for(int row = 0; row < _gridsizey; row++)
+        {
+            rowOffset = _gridsizex * row;
+
+            for(int index = 0; index < _gridsizex; index++)
+            {
+                currentTileIndex = index + rowOffset;
+
+                if (currentTileIndex + _gridsizex < count)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.North, puzzleTiles[currentTileIndex + _gridsizex]);
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.North, null);
+                }
+
+                if(index + 1 < _gridsizex && currentTileIndex + _gridsizex < count)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.NorthEast, puzzleTiles[currentTileIndex + _gridsizex + 1]);
+
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.NorthEast, null);
+                }
+
+                if (index + 1 < _gridsizex)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.East, puzzleTiles[currentTileIndex + 1]);
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.East, null);
+                }
+
+                if (index + 1 < _gridsizex && currentTileIndex - _gridsizex >= 0)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.SouthEast, puzzleTiles[currentTileIndex - _gridsizex + 1]);
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.SouthEast, null);
+                }
+
+                if (currentTileIndex - _gridsizex >= 0)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.South, puzzleTiles[currentTileIndex - _gridsizex]);
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.South, null);
+                }
+
+                if (index - 1 >= 0 && currentTileIndex - _gridsizex >= 0)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.SouthWest, puzzleTiles[currentTileIndex - _gridsizex - 1]);
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.SouthWest, null);
+                }
+
+                if (index - 1 >= 0)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.West, puzzleTiles[currentTileIndex - 1]);
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.West, null);
+                }
+            
+                if (index - 1 >= 0 && currentTileIndex + _gridsizex < count)
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.NorthWest, puzzleTiles[currentTileIndex + _gridsizex - 1]);
+                }
+                else
+                {
+                    puzzleTiles[currentTileIndex].AssignChildDirection(EChildGridDirection.NorthWest, null);
+                }
+
+            }
+
+        }
+
+
+    }
+
     /// <summary>
     /// Shifts gameplayTile objects in a gameplayTile List "grid" by the amount given, looping around to the "other end" if necessary.
     /// Positive amount implies movement to the right, Negitive amount implies movement to the left.
@@ -81,12 +178,12 @@ public class PuzzleGrid
             }
 
             //Target to spare
-            _gridPuzzleTiles[spareIndex] = _gridPuzzleTiles[indexRowOffset + x];
+            _gridPuzzleTiles[spareIndex].tileMatchType = _gridPuzzleTiles[indexRowOffset + x].tileMatchType;
             //First to target
-            _gridPuzzleTiles[indexRowOffset + x] = _gridPuzzleTiles[indexRowOffset];
-            _gridPuzzleTiles[indexRowOffset + x]._gridPosX = x;
+            _gridPuzzleTiles[indexRowOffset + x].tileMatchType = _gridPuzzleTiles[indexRowOffset].tileMatchType;
+            //_gridPuzzleTiles[indexRowOffset + x]._gridPosX = x;
             //spare to first
-            _gridPuzzleTiles[indexRowOffset] = _gridPuzzleTiles[spareIndex];
+            _gridPuzzleTiles[indexRowOffset].tileMatchType = _gridPuzzleTiles[spareIndex].tileMatchType;
 
         } while (x != 0);
 
@@ -121,12 +218,12 @@ public class PuzzleGrid
             targetIndex = columnIndex + y * _gridsizex;
 
             //Target to Spare
-            _gridPuzzleTiles[spareIndex] = _gridPuzzleTiles[targetIndex];
+            _gridPuzzleTiles[spareIndex].tileMatchType = _gridPuzzleTiles[targetIndex].tileMatchType;
             //First to Target
-            _gridPuzzleTiles[targetIndex] = _gridPuzzleTiles[columnIndex];
-            _gridPuzzleTiles[targetIndex]._gridPosY = y;
+            _gridPuzzleTiles[targetIndex].tileMatchType = _gridPuzzleTiles[columnIndex].tileMatchType;
+            //_gridPuzzleTiles[targetIndex]._gridPosY = y;
             //Spare to First
-            _gridPuzzleTiles[columnIndex] = _gridPuzzleTiles[spareIndex];
+            _gridPuzzleTiles[columnIndex].tileMatchType = _gridPuzzleTiles[spareIndex].tileMatchType;
 
         } while (y != 0);
     }

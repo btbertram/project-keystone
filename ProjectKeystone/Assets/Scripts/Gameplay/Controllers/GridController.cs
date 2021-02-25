@@ -68,7 +68,7 @@ public class GridController : MonoBehaviour
         PuzzleTilePresenter[] test = FindObjectsOfType<PuzzleTilePresenter>();
         foreach(PuzzleTilePresenter presenter in test)
         {
-            presenter.PositionSync();
+            presenter.AppearanceSync();
         }
     }
 

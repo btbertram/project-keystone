@@ -60,6 +60,36 @@ public class PuzzleGameObject : MonoBehaviour
         {
             Debug.Log(currentPuzzleCursor.gridPosX.ToString() + "" + currentPuzzleCursor.gridPosY.ToString());
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            int number = 0;
+            int tilenumber = 0;
+
+            for (int y = 0; y < puzzleSizeY; y++)
+            {
+                Debug.Log("Grid Row Number: " + number.ToString());
+                number++;
+
+                for (int x = 0; x < puzzleSizeX; x++)
+                {
+                    PuzzleTile tile = currentGameplayGrid._gridPuzzleTiles[tilenumber];
+                    Debug.Log(tile + " TileID:" + tile._tileid.ToString());
+                    foreach (PuzzleTile searchable in tile.children)
+                    {
+                        if(searchable != null)
+                        {
+                            Debug.Log("Child:" + searchable._tileid);
+                        }
+                        else
+                        {
+                            Debug.Log("Child: null");
+                        }
+                    }
+
+                    tilenumber++;
+                }
+            }
+        }
 
     }
 }
