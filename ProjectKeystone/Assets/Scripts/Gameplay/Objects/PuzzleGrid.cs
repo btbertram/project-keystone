@@ -55,6 +55,7 @@ public class PuzzleGrid
         _gridPuzzleTiles.Add(workTile);
 
         SetTileChildren(_gridPuzzleTiles);
+
     }
 
 

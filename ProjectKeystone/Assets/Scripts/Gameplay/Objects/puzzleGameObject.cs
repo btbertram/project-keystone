@@ -11,6 +11,7 @@ public class PuzzleGameObject : MonoBehaviour
     public PuzzleState currentPuzzleState;
     public PuzzleGrid currentGameplayGrid;
     public PuzzleCursor currentPuzzleCursor;
+    public PuzzleShapeSearch searchSystem;
     public float cameraEdgeSpace = 2.5f;
     Camera mainCamera;
 
@@ -22,6 +23,7 @@ public class PuzzleGameObject : MonoBehaviour
     {
         currentGameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
         currentPuzzleCursor = new PuzzleCursor(puzzleSizeX, puzzleSizeY);
+        searchSystem = new PuzzleShapeSearch();
         mainCamera = FindObjectOfType<Camera>();
     }
 
@@ -37,6 +39,7 @@ public class PuzzleGameObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //tests tile data
         if (Input.GetKeyDown(KeyCode.P))
         {
             int number = 0;
@@ -56,10 +59,12 @@ public class PuzzleGameObject : MonoBehaviour
             }
 
         }
+        //tests cursor position
         if (Input.GetKeyDown(KeyCode.O))
         {
             Debug.Log(currentPuzzleCursor.gridPosX.ToString() + "" + currentPuzzleCursor.gridPosY.ToString());
         }
+        //Tests entries/children for search system
         if (Input.GetKeyDown(KeyCode.I))
         {
             int number = 0;
@@ -89,6 +94,29 @@ public class PuzzleGameObject : MonoBehaviour
                     tilenumber++;
                 }
             }
+        }
+        //Vert Line Search Test 
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            searchSystem.LineSearch(currentGameplayGrid, true);
+
+            int number = 0;
+            int tilenumber = 0;
+
+            for (int y = 0; y < puzzleSizeY; y++)
+            {
+                Debug.Log("Grid Row Number: " + number.ToString());
+                number++;
+
+                for (int x = 0; x < puzzleSizeX; x++)
+                {
+                    PuzzleTile tile = currentGameplayGrid._gridPuzzleTiles[tilenumber];
+                    Debug.Log(tile + " TileID:" + tile._tileid.ToString() + " Is Match Ready: " + tile.matchReady.ToString());
+
+                    tilenumber++;
+                }
+            }
+
         }
 
     }

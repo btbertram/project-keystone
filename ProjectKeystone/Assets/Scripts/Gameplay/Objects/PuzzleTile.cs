@@ -9,11 +9,14 @@ public class PuzzleTile : ISearchable
     public int _tileid;
     public int _gridPosX;
     public int _gridPosY;
+    public bool matchReady = false;
     private List<ISearchable> _children;
+    private ISearchable _parent;
     private bool _wasSearched;
 
     public bool wasSearched { get => _wasSearched; set => _wasSearched = value; }
     public List<ISearchable> children { get => _children; set => _children = value; }
+    public ISearchable parent { get => _parent; set => _parent = value; }
 
     public PuzzleTile(int tileid, int gridPosX, int gridPosY)
     {
@@ -28,9 +31,11 @@ public class PuzzleTile : ISearchable
         }
     }
 
-    void TileMatchTypeReroll()
+    public void TileMatchTypeReroll()
     {
         tileMatchType = (EPuzzleTileMatchType)GameManager.rand.Next((int)EPuzzleTileMatchType.square, (int)EPuzzleTileMatchType.diamond+1);
+        matchReady = false;
+        Debug.Log("Tile Rerolled! Tile is now:" + tileMatchType.ToString());
     }
 
     public void AssignChildDirection(EChildGridDirection gridDirection, ISearchable child)

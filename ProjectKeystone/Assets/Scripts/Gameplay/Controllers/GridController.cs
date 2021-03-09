@@ -8,6 +8,7 @@ public class GridController : MonoBehaviour
     PuzzleGrid currentPuzzleGrid;
     PuzzleState currentPuzzleState;
     PuzzleCursor currentPuzzleCursor;
+    PuzzleShapeSearch currentSearchSystem;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,7 @@ public class GridController : MonoBehaviour
         currentPuzzleGrid = FindObjectOfType<PuzzleGameObject>().currentGameplayGrid;
         currentPuzzleState = FindObjectOfType<PuzzleGameObject>().currentPuzzleState;
         currentPuzzleCursor = FindObjectOfType<PuzzleGameObject>().currentPuzzleCursor;
+        currentSearchSystem = FindObjectOfType<PuzzleGameObject>().searchSystem;
 
     }
 
@@ -32,8 +34,18 @@ public class GridController : MonoBehaviour
 
         if (Input.GetButtonDown(EInputAxis.Submit.ToString()))
         {
-            Debug.Log("Submit Hit");
+            Debug.Log("Submit Hit, Searching for Vertical Line Matches");
+            CommenceShapeSearch(EPuzzleSearchType.VerticalLine);
+            MatchTiles();
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("L hit, Searching for Horizontal Line Matches");
+            CommenceShapeSearch(EPuzzleSearchType.HorizontalLine);
+            MatchTiles();
+        }
+
 
     }
 
@@ -65,11 +77,7 @@ public class GridController : MonoBehaviour
 
             }
         }
-        PuzzleTilePresenter[] test = FindObjectsOfType<PuzzleTilePresenter>();
-        foreach(PuzzleTilePresenter presenter in test)
-        {
-            presenter.AppearanceSync();
-        }
+        AppearanceSyncAllTiles();
     }
 
     private void MoveCursor()
@@ -84,6 +92,42 @@ public class GridController : MonoBehaviour
             currentPuzzleCursor.MoveVertical(Input.GetAxis(EInputAxis.Vertical.ToString()));
         }
         FindObjectOfType<PuzzleCursorPresenter>().PositionSync();
+    }
+
+    private void CommenceShapeSearch(EPuzzleSearchType puzzleSearchType)
+    {
+        switch (puzzleSearchType)
+        {
+            case EPuzzleSearchType.VerticalLine:
+                currentSearchSystem.LineSearch(currentPuzzleGrid, true);
+                break;
+            case EPuzzleSearchType.HorizontalLine:
+                currentSearchSystem.LineSearch(currentPuzzleGrid, false);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void MatchTiles()
+    {
+        foreach(PuzzleTile tile in currentPuzzleGrid._gridPuzzleTiles)
+        {
+            if (tile.matchReady)
+            {
+                tile.TileMatchTypeReroll();
+            }
+        }
+        AppearanceSyncAllTiles();
+    }
+
+    private void AppearanceSyncAllTiles()
+    {
+        PuzzleTilePresenter[] test = FindObjectsOfType<PuzzleTilePresenter>();
+        foreach (PuzzleTilePresenter presenter in test)
+        {
+            presenter.AppearanceSync();
+        }
     }
 
 

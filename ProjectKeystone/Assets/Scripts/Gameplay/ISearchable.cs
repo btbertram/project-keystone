@@ -19,4 +19,10 @@ public interface ISearchable
         get;
         set;
     }
+
+    ISearchable parent
+    {
+        get;
+        set;
+    }
 }

@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzleState
+/// <summary>
+/// A Gameplay Object Class that tracks the current state of puzzle in play.
+/// </summary>
+public class PuzzleState : MonoBehaviour
 {
+    public int MatchGoalQuota;
+    public int time;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //
+    //Difficulty modifiers:
+    //Allowed MatchTypes
+    //Allowed "Keys"
+    ///"Key" Appearance weighting
+    //Puzzle size? (Move from Puzzle Game Object?)
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //Holds the "shape queue" and "Next Shape"
+    
+
 }
