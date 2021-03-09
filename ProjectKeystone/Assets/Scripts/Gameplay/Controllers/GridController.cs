@@ -34,16 +34,18 @@ public class GridController : MonoBehaviour
 
         if (Input.GetButtonDown(EInputAxis.Submit.ToString()))
         {
-            Debug.Log("Submit Hit, Searching for Vertical Line Matches");
+            Debug.Log("Submit Hit, Searching for Vertical Line Matches. REMEMBER TO ADD ENUM FOR PLAYERNUMBER");
             CommenceShapeSearch(EPuzzleSearchType.VerticalLine);
-            MatchTiles();
+            MatchTiles(0);
+            Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].playerScorePoint.ToString());
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Debug.Log("L hit, Searching for Horizontal Line Matches");
+            Debug.Log("L hit, Searching for Horizontal Line Matches. REMEMEBER TO ADD ENUM FOR PLAYERNUMBER");
             CommenceShapeSearch(EPuzzleSearchType.HorizontalLine);
-            MatchTiles();
+            MatchTiles(0);
+            Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].playerScorePoint.ToString());
         }
 
 
@@ -109,15 +111,14 @@ public class GridController : MonoBehaviour
         }
     }
 
-    private void MatchTiles()
+    private void MatchTiles(int playerNumber)
     {
-        foreach(PuzzleTile tile in currentPuzzleGrid._gridPuzzleTiles)
-        {
-            if (tile.matchReady)
-            {
-                tile.TileMatchTypeReroll();
-            }
-        }
+        int scorePointsEarned = currentPuzzleState.CalculateScorePoints(currentPuzzleGrid.ClearMatchReadyTiles(), 
+            currentPuzzleState.puzzlePlayers[playerNumber].currentComboCount,
+            currentPuzzleState.puzzlePlayers[playerNumber].currentKeyComboCount);
+
+        currentPuzzleState.AddScorePointsToPlayer(playerNumber, scorePointsEarned);
+
         AppearanceSyncAllTiles();
     }
 

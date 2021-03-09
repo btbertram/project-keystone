@@ -9,7 +9,7 @@ public class PuzzleTile : ISearchable
     public int _tileid;
     public int _gridPosX;
     public int _gridPosY;
-    public bool matchReady = false;
+    public bool matchReady;
     private List<ISearchable> _children;
     private ISearchable _parent;
     private bool _wasSearched;

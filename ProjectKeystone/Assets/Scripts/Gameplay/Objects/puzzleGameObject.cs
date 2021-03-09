@@ -17,6 +17,11 @@ public class PuzzleGameObject : MonoBehaviour
 
     [Range(1,20)] public int puzzleSizeX;
     [Range(1,20)] public int puzzleSizeY;
+    public float TimeLimit;
+    public int ClearQuota;
+
+    //Temp field, pre-gameManager implementation
+    [Range(1,2)]public int NumberOfPlayers;
 
     // Start is called before the first frame update
     void Awake()
@@ -24,6 +29,7 @@ public class PuzzleGameObject : MonoBehaviour
         currentGameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
         currentPuzzleCursor = new PuzzleCursor(puzzleSizeX, puzzleSizeY);
         searchSystem = new PuzzleShapeSearch();
+        currentPuzzleState = new PuzzleState(NumberOfPlayers, ClearQuota, TimeLimit);
         mainCamera = FindObjectOfType<Camera>();
     }
 
@@ -39,85 +45,6 @@ public class PuzzleGameObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //tests tile data
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            int number = 0;
-            int tilenumber = 0;
-
-            for(int y = 0; y < puzzleSizeY; y++)
-            {
-                Debug.Log("Grid Row Number: " + number.ToString());
-                number++;
-
-                for(int x = 0; x < puzzleSizeX; x++)
-                {
-                    PuzzleTile tile = currentGameplayGrid._gridPuzzleTiles[tilenumber];
-                    Debug.Log(tile + " TileID:" + tile._tileid.ToString());
-                    tilenumber++;
-                }
-            }
-
-        }
-        //tests cursor position
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Debug.Log(currentPuzzleCursor.gridPosX.ToString() + "" + currentPuzzleCursor.gridPosY.ToString());
-        }
-        //Tests entries/children for search system
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            int number = 0;
-            int tilenumber = 0;
-
-            for (int y = 0; y < puzzleSizeY; y++)
-            {
-                Debug.Log("Grid Row Number: " + number.ToString());
-                number++;
-
-                for (int x = 0; x < puzzleSizeX; x++)
-                {
-                    PuzzleTile tile = currentGameplayGrid._gridPuzzleTiles[tilenumber];
-                    Debug.Log(tile + " TileID:" + tile._tileid.ToString());
-                    foreach (PuzzleTile searchable in tile.children)
-                    {
-                        if(searchable != null)
-                        {
-                            Debug.Log("Child:" + searchable._tileid);
-                        }
-                        else
-                        {
-                            Debug.Log("Child: null");
-                        }
-                    }
-
-                    tilenumber++;
-                }
-            }
-        }
-        //Vert Line Search Test 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            searchSystem.LineSearch(currentGameplayGrid, true);
-
-            int number = 0;
-            int tilenumber = 0;
-
-            for (int y = 0; y < puzzleSizeY; y++)
-            {
-                Debug.Log("Grid Row Number: " + number.ToString());
-                number++;
-
-                for (int x = 0; x < puzzleSizeX; x++)
-                {
-                    PuzzleTile tile = currentGameplayGrid._gridPuzzleTiles[tilenumber];
-                    Debug.Log(tile + " TileID:" + tile._tileid.ToString() + " Is Match Ready: " + tile.matchReady.ToString());
-
-                    tilenumber++;
-                }
-            }
-
-        }
-
+                
     }
 }

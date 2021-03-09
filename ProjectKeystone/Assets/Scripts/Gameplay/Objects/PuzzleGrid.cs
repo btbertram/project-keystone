@@ -229,4 +229,18 @@ public class PuzzleGrid
         } while (y != 0);
     }
 
+
+    public int ClearMatchReadyTiles()
+    {
+        int tilesCleared = 0;
+        foreach (PuzzleTile tile in _gridPuzzleTiles)
+        {
+            if (tile.matchReady)
+            {
+                tile.TileMatchTypeReroll();
+                tilesCleared++;
+            }
+        }
+        return tilesCleared;
+    }
 }
