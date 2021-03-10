@@ -8,10 +8,11 @@ using UnityEngine;
 
 public class PuzzleGameObject : MonoBehaviour
 {
-    public PuzzleState currentPuzzleState;
-    public PuzzleGrid currentGameplayGrid;
-    public PuzzleCursor currentPuzzleCursor;
+    public PuzzleState puzzleState;
+    public PuzzleGrid gameplayGrid;
+    public PuzzleCursor puzzleCursor;
     public PuzzleShapeSearch searchSystem;
+    public PuzzleNextMatchQueue puzzleNextMatchQueue;
     public float cameraEdgeSpace = 2.5f;
     Camera mainCamera;
 
@@ -26,10 +27,11 @@ public class PuzzleGameObject : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        currentGameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
-        currentPuzzleCursor = new PuzzleCursor(puzzleSizeX, puzzleSizeY);
+        gameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
+        puzzleCursor = new PuzzleCursor(puzzleSizeX, puzzleSizeY);
         searchSystem = new PuzzleShapeSearch();
-        currentPuzzleState = new PuzzleState(NumberOfPlayers, ClearQuota, TimeLimit);
+        puzzleState = new PuzzleState(NumberOfPlayers, ClearQuota, TimeLimit);
+        puzzleNextMatchQueue = new PuzzleNextMatchQueue();
         mainCamera = FindObjectOfType<Camera>();
     }
 

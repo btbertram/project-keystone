@@ -33,7 +33,8 @@ public class PuzzleTile : ISearchable
 
     public void TileMatchTypeReroll()
     {
-        tileMatchType = (EPuzzleTileMatchType)GameManager.rand.Next((int)EPuzzleTileMatchType.square, (int)EPuzzleTileMatchType.diamond+1);
+        //This version of Next(minVal, maxVal) does not include the maxValue as a possible returned value, so it has to be 1 higher than the max we want it to roll
+        tileMatchType = (EPuzzleTileMatchType)GameManager.rand.Next((int)EPuzzleTileMatchType.error+1, (int)EPuzzleTileMatchType.special);
         matchReady = false;
         Debug.Log("Tile Rerolled! Tile is now:" + tileMatchType.ToString());
     }

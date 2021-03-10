@@ -31,7 +31,7 @@ public class PuzzleTilePresenter : MonoBehaviour
     /// </summary>
     public void AssignTile(int columnIndex, int rowIndex)
     {
-        assocatedTile = puzzle.currentGameplayGrid._gridPuzzleTiles[columnIndex + rowIndex * puzzle.puzzleSizeX];
+        assocatedTile = puzzle.gameplayGrid._gridPuzzleTiles[columnIndex + rowIndex * puzzle.puzzleSizeX];
         //We'll want to call this on a confirmed move. Right now, that's after every move.
     }
 

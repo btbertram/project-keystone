@@ -9,15 +9,16 @@ public class GridController : MonoBehaviour
     PuzzleState currentPuzzleState;
     PuzzleCursor currentPuzzleCursor;
     PuzzleShapeSearch currentSearchSystem;
+    PuzzleNextMatchQueue currentPuzzleNextMatchQueue;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentPuzzleGrid = FindObjectOfType<PuzzleGameObject>().currentGameplayGrid;
-        currentPuzzleState = FindObjectOfType<PuzzleGameObject>().currentPuzzleState;
-        currentPuzzleCursor = FindObjectOfType<PuzzleGameObject>().currentPuzzleCursor;
+        currentPuzzleGrid = FindObjectOfType<PuzzleGameObject>().gameplayGrid;
+        currentPuzzleState = FindObjectOfType<PuzzleGameObject>().puzzleState;
+        currentPuzzleCursor = FindObjectOfType<PuzzleGameObject>().puzzleCursor;
         currentSearchSystem = FindObjectOfType<PuzzleGameObject>().searchSystem;
-
+        currentPuzzleNextMatchQueue = FindObjectOfType<PuzzleGameObject>().puzzleNextMatchQueue;
     }
 
     // Update is called once per frame
@@ -35,20 +36,18 @@ public class GridController : MonoBehaviour
         if (Input.GetButtonDown(EInputAxis.Submit.ToString()))
         {
             Debug.Log("Submit Hit, Searching for Vertical Line Matches. REMEMBER TO ADD ENUM FOR PLAYERNUMBER");
-            CommenceShapeSearch(EPuzzleSearchType.VerticalLine);
+            CommenceShapeSearch(currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer[0]);
             MatchTiles(0);
             Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].playerScorePoint.ToString());
+
+            string queueOrder = "Current ShapeQueue order is: ";
+            foreach (EPuzzleSearchType ePuzzleSearchType in currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer)
+            {
+                queueOrder += ePuzzleSearchType.ToString() + ", ";
+            }
+            Debug.Log(queueOrder);
+
         }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log("L hit, Searching for Horizontal Line Matches. REMEMEBER TO ADD ENUM FOR PLAYERNUMBER");
-            CommenceShapeSearch(EPuzzleSearchType.HorizontalLine);
-            MatchTiles(0);
-            Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].playerScorePoint.ToString());
-        }
-
-
     }
 
     private void ShiftGrid()
@@ -117,9 +116,14 @@ public class GridController : MonoBehaviour
             currentPuzzleState.puzzlePlayers[playerNumber].currentComboCount,
             currentPuzzleState.puzzlePlayers[playerNumber].currentKeyComboCount);
 
-        currentPuzzleState.AddScorePointsToPlayer(playerNumber, scorePointsEarned);
+        //If points have been earned, a match has occured
+        if(scorePointsEarned > 0)
+        {
+            currentPuzzleState.AddScorePointsToPlayer(playerNumber, scorePointsEarned);
+            currentPuzzleNextMatchQueue.AdvanceQueue();
+            AppearanceSyncAllTiles();
+        }
 
-        AppearanceSyncAllTiles();
     }
 
     private void AppearanceSyncAllTiles()

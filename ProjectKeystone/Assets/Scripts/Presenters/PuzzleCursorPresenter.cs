@@ -15,7 +15,7 @@ public class PuzzleCursorPresenter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _puzzleCursor = GameObject.FindObjectOfType<PuzzleGameObject>().currentPuzzleCursor;
+        _puzzleCursor = GameObject.FindObjectOfType<PuzzleGameObject>().puzzleCursor;
         _currentGridSpacing = FindObjectOfType<PuzzleGridPresenter>().gridSpacing;
         //Instanciate Sprite
         //Position Sprite based on position of sprite cursor
