@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A Gameplay GameObject class, used to capture player input and manipulate the Puzzle objects and their presenters.
+/// </summary>
 public class GridController : MonoBehaviour
 {
 
@@ -18,38 +21,33 @@ public class GridController : MonoBehaviour
         currentPuzzleState = FindObjectOfType<PuzzleGameObject>().puzzleState;
         currentPuzzleCursor = FindObjectOfType<PuzzleGameObject>().puzzleCursor;
         currentSearchSystem = FindObjectOfType<PuzzleGameObject>().searchSystem;
-        currentPuzzleNextMatchQueue = FindObjectOfType<PuzzleGameObject>().puzzleNextMatchQueue;
+        currentPuzzleNextMatchQueue = currentPuzzleState.PuzzleNextMatchQueue;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton(EInputAxis.Fire1.ToString()))
+        if (currentPuzzleState.isInPlay)
         {
-            ShiftGrid();
-        }
-        else
-        {
-            MoveCursor();
-        }
-
-        if (Input.GetButtonDown(EInputAxis.Submit.ToString()))
-        {
-            Debug.Log("Submit Hit, Searching for Vertical Line Matches. REMEMBER TO ADD ENUM FOR PLAYERNUMBER");
-            CommenceShapeSearch(currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer[0]);
-            MatchTiles(0);
-            Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].playerScorePoint.ToString());
-
-            string queueOrder = "Current ShapeQueue order is: ";
-            foreach (EPuzzleSearchType ePuzzleSearchType in currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer)
+            if (Input.GetButton(EInputAxis.Fire1.ToString()))
             {
-                queueOrder += ePuzzleSearchType.ToString() + ", ";
+                ShiftGrid();
             }
-            Debug.Log(queueOrder);
+            else
+            {
+                MoveCursor();
+            }
 
+            if (Input.GetButtonDown(EInputAxis.Submit.ToString()))
+            {
+                MatchTiles();
+            }
         }
     }
 
+    /// <summary>
+    /// Captures Player input. Commands the PuzzleGrid object to PuzzleTile data around based on cursor position.
+    /// </summary>
     private void ShiftGrid()
     {
         if (Input.GetButtonDown(EInputAxis.Horizontal.ToString()))
@@ -81,6 +79,9 @@ public class GridController : MonoBehaviour
         AppearanceSyncAllTiles();
     }
 
+    /// <summary>
+    /// Captures player input. Commands the PuzzleCursor object to change its position.
+    /// </summary>
     private void MoveCursor()
     {
         if (Input.GetButtonDown(EInputAxis.Horizontal.ToString()))
@@ -93,8 +94,31 @@ public class GridController : MonoBehaviour
             currentPuzzleCursor.MoveVertical(Input.GetAxis(EInputAxis.Vertical.ToString()));
         }
         FindObjectOfType<PuzzleCursorPresenter>().PositionSync();
+
     }
 
+    /// <summary>
+    /// Captures Player Input. Commands the PuzzleShapeSearch system to search the grid and match tiles together, then clear them if a match has been found.
+    /// </summary>
+    private void MatchTiles()
+    {
+        Debug.Log("Submit Hit, Searching for Vertical Line Matches. REMEMBER TO ADD ENUM FOR PLAYERNUMBER");
+        CommenceShapeSearch(currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer[0]);
+        ClearTiles(0);
+        Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].playerScorePoint.ToString());
+
+        string queueOrder = "Current ShapeQueue order is: ";
+        foreach (EPuzzleSearchType ePuzzleSearchType in currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer)
+        {
+            queueOrder += ePuzzleSearchType.ToString() + ", ";
+        }
+        Debug.Log(queueOrder);
+    } 
+
+    /// <summary>
+    /// Commands the PuzzleShapeSearch system to search the current PuzzleGrid object based on the provided PuzzleSearchType.
+    /// </summary>
+    /// <param name="puzzleSearchType">An Enum that denotes which pattern in the grid to find.</param>
     private void CommenceShapeSearch(EPuzzleSearchType puzzleSearchType)
     {
         switch (puzzleSearchType)
@@ -110,7 +134,11 @@ public class GridController : MonoBehaviour
         }
     }
 
-    private void MatchTiles(int playerNumber)
+    /// <summary>
+    /// Runs matching clear logic on PuzzleTiles after a PuzzleShapeSearch, updating the PuzzleState and PuzzlePlayer information as needed.
+    /// </summary>
+    /// <param name="playerNumber">The player ID that input the submit command.</param>
+    private void ClearTiles(int playerNumber)
     {
         int scorePointsEarned = currentPuzzleState.CalculateScorePoints(currentPuzzleGrid.ClearMatchReadyTiles(), 
             currentPuzzleState.puzzlePlayers[playerNumber].currentComboCount,
@@ -126,6 +154,11 @@ public class GridController : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// Calls on all active PuzzleTilePresenters in scene to sync thier sprite with their associated tile.
+    /// This can probably be optimized to only update PuzzleTilePresenters which need their appearance to be updated.
+    /// </summary>
     private void AppearanceSyncAllTiles()
     {
         PuzzleTilePresenter[] test = FindObjectsOfType<PuzzleTilePresenter>();

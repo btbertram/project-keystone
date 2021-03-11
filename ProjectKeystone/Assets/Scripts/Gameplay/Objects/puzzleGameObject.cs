@@ -12,7 +12,6 @@ public class PuzzleGameObject : MonoBehaviour
     public PuzzleGrid gameplayGrid;
     public PuzzleCursor puzzleCursor;
     public PuzzleShapeSearch searchSystem;
-    public PuzzleNextMatchQueue puzzleNextMatchQueue;
     public float cameraEdgeSpace = 2.5f;
     Camera mainCamera;
 
@@ -31,7 +30,6 @@ public class PuzzleGameObject : MonoBehaviour
         puzzleCursor = new PuzzleCursor(puzzleSizeX, puzzleSizeY);
         searchSystem = new PuzzleShapeSearch();
         puzzleState = new PuzzleState(NumberOfPlayers, ClearQuota, TimeLimit);
-        puzzleNextMatchQueue = new PuzzleNextMatchQueue();
         mainCamera = FindObjectOfType<Camera>();
     }
 
@@ -47,6 +45,9 @@ public class PuzzleGameObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-                
+        if (puzzleState.isInPlay)
+        {
+            puzzleState.AdjustTimeLeft(-Time.deltaTime);
+        }
     }
 }

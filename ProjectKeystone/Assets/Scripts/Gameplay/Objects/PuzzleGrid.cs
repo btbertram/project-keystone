@@ -58,7 +58,10 @@ public class PuzzleGrid
 
     }
 
-
+    /// <summary>
+    /// Interface utility function. Populates the children list in PuzzleTile objects from the ISearchable interface, in reference to their positioning in the PuzzleGrid. 
+    /// </summary>
+    /// <param name="puzzleTiles"></param>
     void SetTileChildren(List<PuzzleTile> puzzleTiles)
     {
         int count = puzzleTiles.Count - 1;
@@ -154,7 +157,7 @@ public class PuzzleGrid
     }
 
     /// <summary>
-    /// Shifts gameplayTile objects in a gameplayTile List "grid" by the amount given, looping around to the "other end" if necessary.
+    /// Shifts PuzzleTile data in a PuzzleTile List "grid" by the amount given, looping around to the "other end" if necessary.
     /// Positive amount implies movement to the right, Negitive amount implies movement to the left.
     /// </summary>
     /// <param name="rowIndex">The index corresponding to the row in the grid to have data moved.</param>
@@ -191,7 +194,7 @@ public class PuzzleGrid
     }
 
     /// <summary>
-    /// Shifts PuzzleTile objects in a PuzzleTile List to another index in the "grid," based on the amount given, looping around if necessary.
+    /// Shifts PuzzleTile data in a PuzzleTile List to another index in the "grid," based on the amount given, looping around if necessary.
     /// Positive amount implies movement "up", while negitive amount implies movement "down".
     /// </summary>
     /// <param name="columnIndex">The index to be used to access tiles in each of the rows.</param>
