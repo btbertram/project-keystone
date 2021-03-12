@@ -27,7 +27,7 @@ public class GridController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentPuzzleState.isInPlay)
+        if (currentPuzzleState.IsInPlay)
         {
             if (Input.GetButton(EInputAxis.Fire1.ToString()))
             {
@@ -46,7 +46,7 @@ public class GridController : MonoBehaviour
     }
 
     /// <summary>
-    /// Captures Player input. Commands the PuzzleGrid object to PuzzleTile data around based on cursor position.
+    /// Captures Player input. Commands the PuzzleGrid object to manipulate PuzzleTile data around based on cursor position.
     /// </summary>
     private void ShiftGrid()
     {
@@ -55,11 +55,11 @@ public class GridController : MonoBehaviour
             float axisVal = Input.GetAxis(EInputAxis.Horizontal.ToString());
             if (axisVal > 0)
             {
-                currentPuzzleGrid.ShiftHorizontal(currentPuzzleCursor.gridPosY, 1);
+                currentPuzzleGrid.ShiftHorizontal(currentPuzzleCursor.GridPosY, 1);
             }
             else if (axisVal < 0)
             {
-                currentPuzzleGrid.ShiftHorizontal(currentPuzzleCursor.gridPosY, -1);
+                currentPuzzleGrid.ShiftHorizontal(currentPuzzleCursor.GridPosY, -1);
             }
 
         }
@@ -68,11 +68,11 @@ public class GridController : MonoBehaviour
             float axisVal = Input.GetAxis(EInputAxis.Vertical.ToString());
             if (axisVal > 0)
             {
-                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.gridPosX, 1);
+                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.GridPosX, 1);
             }
             else if (axisVal < 0)
             {
-                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.gridPosX, -1);
+                currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.GridPosX, -1);
 
             }
         }
@@ -102,10 +102,10 @@ public class GridController : MonoBehaviour
     /// </summary>
     private void MatchTiles()
     {
-        Debug.Log("Submit Hit, Searching for Vertical Line Matches. REMEMBER TO ADD ENUM FOR PLAYERNUMBER");
+        //Debug.Log("Submit Hit, Searching for Vertical Line Matches. REMEMBER TO ADD ENUM FOR PLAYERNUMBER");
         CommenceShapeSearch(currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer[0]);
         ClearTiles(0);
-        Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].playerScorePoint.ToString());
+        Debug.Log("Player Current Score is: " + currentPuzzleState.puzzlePlayers[0].PlayerScorePoint.ToString());
 
         string queueOrder = "Current ShapeQueue order is: ";
         foreach (EPuzzleSearchType ePuzzleSearchType in currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer)
@@ -141,8 +141,8 @@ public class GridController : MonoBehaviour
     private void ClearTiles(int playerNumber)
     {
         int scorePointsEarned = currentPuzzleState.CalculateScorePoints(currentPuzzleGrid.ClearMatchReadyTiles(), 
-            currentPuzzleState.puzzlePlayers[playerNumber].currentComboCount,
-            currentPuzzleState.puzzlePlayers[playerNumber].currentKeyComboCount);
+            currentPuzzleState.puzzlePlayers[playerNumber].CurrentComboCount,
+            currentPuzzleState.puzzlePlayers[playerNumber].CurrentKeyComboCount);
 
         //If points have been earned, a match has occured
         if(scorePointsEarned > 0)

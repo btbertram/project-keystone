@@ -7,8 +7,10 @@ using UnityEngine;
 /// </summary>
 public class PuzzleState
 {
-    public bool isInPlay;
+    bool _isInPlay;
+    public bool IsInPlay { get => _isInPlay; }
     int _matchPointGoalQuota;
+    public int MatchPointGoalQuota { get => _matchPointGoalQuota; }
     float _timeLeft;
     float TimeLeft { get => _timeLeft; }
     int _tilePointScoreValue;
@@ -17,14 +19,21 @@ public class PuzzleState
 
     public List<PuzzlePlayer> puzzlePlayers;
 
+    /// <summary>
+    /// PuzzleState Constructor.
+    /// </summary>
+    /// <param name="numberOfPlayers">The number of active players for this puzzle.</param>
+    /// <param name="matchClearScore">The number of matches required to clear this puzzle. Argument of 0 or less denotes Endless mode.</param>
+    /// <param name="timeLimit">The initial time limit for this puzzle.</param>
     public PuzzleState(int numberOfPlayers, int matchClearScore, float timeLimit)
     {
-        isInPlay = true;
+        _isInPlay = true;
         _matchPointGoalQuota = matchClearScore;
         _timeLeft = timeLimit;
         //This will later be modified by difficulty
         _tilePointScoreValue = 100;
-        puzzlePlayers = new List<PuzzlePlayer>(1);
+        //Current max planned players is 2, so capacity set to 2
+        puzzlePlayers = new List<PuzzlePlayer>(2);
         for (int x = 0; x < numberOfPlayers; x++)
         {
             PuzzlePlayer newPlayer = new PuzzlePlayer();
@@ -43,7 +52,7 @@ public class PuzzleState
     public int CalculateScorePoints(int tilesCleared, int comboCount, int keysUsedCount)
     {
         int result = 0;
-        //100t * n * m
+        //Basic scor formula: 100t * n * m
         result = ((_tilePointScoreValue * tilesCleared) * comboCount) * keysUsedCount;
         return result;
     }
@@ -76,8 +85,8 @@ public class PuzzleState
         if(_timeLeft <= 0)
         {
             //Time Up!
-            isInPlay = false;
-            Debug.Log("Game Over! P1 Final Socre: " + puzzlePlayers[0].playerScorePoint.ToString());
+            _isInPlay = false;
+            Debug.Log("Game Over! P1 Final Socre: " + puzzlePlayers[0].PlayerScorePoint.ToString());
 
         }
     }
@@ -87,9 +96,5 @@ public class PuzzleState
     //Allowed MatchTypes
     //Allowed "Keys"
     ///"Key" Appearance weighting
-    //Puzzle size? (Move from Puzzle Game Object?)
-
-    //Holds the "shape queue" and "Next Shape"
-    
 
 }

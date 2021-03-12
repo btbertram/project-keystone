@@ -28,9 +28,9 @@ public class PuzzleTilePresenterManager : MonoBehaviour
     /// <summary>
     /// Creates a visual representation of all the puzzleTiles in the PuzzleGrid.
     /// </summary>
-    /// <param name="puzzleSizeX"></param>
-    /// <param name="puzzleSizeY"></param>
-    /// <param name="gridSpacing"></param>
+    /// <param name="puzzleSizeX">The length of the puzzle in the X axis.</param>
+    /// <param name="puzzleSizeY">The height of the puzzle in the Y axis.</param>
+    /// <param name="gridSpacing">The space between lines in the grid visuals.</param>
     public void GeneratePuzzleTilePresenters(int puzzleSizeX, int puzzleSizeY, float gridSpacing)
     {
         Vector3 pos = Vector3.zero;

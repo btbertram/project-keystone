@@ -10,8 +10,9 @@ public class PuzzleGrid
 
     private int _gridsizex;
     private int _gridsizey;
-
-    public List<PuzzleTile> _gridPuzzleTiles;
+    
+    List<PuzzleTile> _gridPuzzleTiles;
+    public List<PuzzleTile> GridPuzzleTiles { get => _gridPuzzleTiles; }
 
     /// <summary>
     /// PuzzleGrid Constructor.
@@ -182,12 +183,12 @@ public class PuzzleGrid
             }
 
             //Target to spare
-            _gridPuzzleTiles[spareIndex].tileMatchType = _gridPuzzleTiles[indexRowOffset + x].tileMatchType;
+            _gridPuzzleTiles[spareIndex].TileMatchType = _gridPuzzleTiles[indexRowOffset + x].TileMatchType;
             //First to target
-            _gridPuzzleTiles[indexRowOffset + x].tileMatchType = _gridPuzzleTiles[indexRowOffset].tileMatchType;
+            _gridPuzzleTiles[indexRowOffset + x].TileMatchType = _gridPuzzleTiles[indexRowOffset].TileMatchType;
             //_gridPuzzleTiles[indexRowOffset + x]._gridPosX = x;
             //spare to first
-            _gridPuzzleTiles[indexRowOffset].tileMatchType = _gridPuzzleTiles[spareIndex].tileMatchType;
+            _gridPuzzleTiles[indexRowOffset].TileMatchType = _gridPuzzleTiles[spareIndex].TileMatchType;
 
         } while (x != 0);
 
@@ -222,23 +223,26 @@ public class PuzzleGrid
             targetIndex = columnIndex + y * _gridsizex;
 
             //Target to Spare
-            _gridPuzzleTiles[spareIndex].tileMatchType = _gridPuzzleTiles[targetIndex].tileMatchType;
+            _gridPuzzleTiles[spareIndex].TileMatchType = _gridPuzzleTiles[targetIndex].TileMatchType;
             //First to Target
-            _gridPuzzleTiles[targetIndex].tileMatchType = _gridPuzzleTiles[columnIndex].tileMatchType;
+            _gridPuzzleTiles[targetIndex].TileMatchType = _gridPuzzleTiles[columnIndex].TileMatchType;
             //_gridPuzzleTiles[targetIndex]._gridPosY = y;
             //Spare to First
-            _gridPuzzleTiles[columnIndex].tileMatchType = _gridPuzzleTiles[spareIndex].tileMatchType;
+            _gridPuzzleTiles[columnIndex].TileMatchType = _gridPuzzleTiles[spareIndex].TileMatchType;
 
         } while (y != 0);
     }
 
-
+    /// <summary>
+    /// Checks the grid for MatchReady PuzzleTiles, randomizing their match type and counting how many PuzzleTiles have been operated on.
+    /// </summary>
+    /// <returns>An int denoting the number of tiles "cleared."</returns>
     public int ClearMatchReadyTiles()
     {
         int tilesCleared = 0;
         foreach (PuzzleTile tile in _gridPuzzleTiles)
         {
-            if (tile.matchReady)
+            if (tile.MatchReady)
             {
                 tile.TileMatchTypeReroll();
                 tilesCleared++;

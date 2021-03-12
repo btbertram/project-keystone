@@ -18,9 +18,12 @@ public class PuzzleGridPresenter : MonoBehaviour
         GenerateGridSprites(puzzle.puzzleSizeX, puzzle.puzzleSizeY);
     }
 
+
     /// <summary>
-    /// Creates a visual representation of the Grid.
+    /// Generates a visual representation of the Grid.
     /// </summary>
+    /// <param name="puzzleSizeX">The length of the puzzle in the X axis.</param>
+    /// <param name="puzzleSizeY">The height of the puzzle in the Y axis.</param>
     public void GenerateGridSprites(int puzzleSizeX, int puzzleSizeY)
     {
         Vector3 pos = Vector3.zero;

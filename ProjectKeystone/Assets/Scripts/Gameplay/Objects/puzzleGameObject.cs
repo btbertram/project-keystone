@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A unity Game Object script that contains the objects to initialize the puzzle.
+/// A unity Game Object script that contains the objects and variables to initialize and run the puzzle.
 /// </summary>
 
 public class PuzzleGameObject : MonoBehaviour
@@ -45,7 +45,7 @@ public class PuzzleGameObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (puzzleState.isInPlay)
+        if (puzzleState.IsInPlay)
         {
             puzzleState.AdjustTimeLeft(-Time.deltaTime);
         }

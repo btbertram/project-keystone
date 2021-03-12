@@ -8,12 +8,13 @@ using UnityEngine;
 public class PuzzlePlayer
 {
     int _playerScorePoint = 0;
-    public int playerScorePoint { get => _playerScorePoint; }
+    public int PlayerScorePoint { get => _playerScorePoint; }
     int _playerMatchPoint = 0;
+    public int PlayerMatchPoint { get => _playerMatchPoint; }
     int _currentComboCount = 1;
-    public int currentComboCount { get => _currentComboCount; }
+    public int CurrentComboCount { get => _currentComboCount; }
     int _currentKeyComboCount = 1;
-    public int currentKeyComboCount { get => _currentKeyComboCount; }    
+    public int CurrentKeyComboCount { get => _currentKeyComboCount; }    
     // var comboTimer;
 
     /// <summary>

@@ -418,7 +418,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzleTilePrefab: {fileID: 7460870947091404519, guid: 3ea7585963dfb284b96c5400b1f74691, type: 3}
   sprites:
-  - {fileID: 21300000, guid: d75f900c6330da244a45a6ec40db57c3, type: 3}
   - {fileID: 21300000, guid: d731627c514d1384196e0f5342516b7f, type: 3}
   - {fileID: 21300000, guid: ea4b5b7bae65ae341910f63f763f5e90, type: 3}
   - {fileID: 21300000, guid: dc068f5da5b044c4d8f13f7989136d49, type: 3}
@@ -426,6 +425,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 26edfe5f44098f14cb5ac34e706e2f6b, type: 3}
   - {fileID: 21300000, guid: 9d592f46b145d3d43b8dc811aec2ea19, type: 3}
   - {fileID: 0}
+  - {fileID: 21300000, guid: d75f900c6330da244a45a6ec40db57c3, type: 3}
 --- !u!4 &1968945991
 Transform:
   m_ObjectHideFlags: 0

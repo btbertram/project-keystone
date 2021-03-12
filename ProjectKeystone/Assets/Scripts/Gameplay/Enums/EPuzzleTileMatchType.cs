@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enum which denotes a tile match type for the purpouses of matching and arranging tiles.
+/// </summary>
 public enum EPuzzleTileMatchType
 {
-    error,
     square,
     circle,
     tri,
     hex,
     star,
     diamond,
-    special
+    special,
+    error
 }

@@ -29,10 +29,11 @@ public class PuzzleTilePresenter : MonoBehaviour
     /// <summary>
     /// Assigns an existing PuzzleTile reference to this TilePresenter.
     /// </summary>
+    /// <param name="columnIndex">The x position of the PuzzleTile in the PuzzleGrid to associate with.</param>
+    /// <param name="rowIndex">The y position of the PuzzleTile in the PuzzleGrid to associate with.</param>
     public void AssignTile(int columnIndex, int rowIndex)
     {
-        assocatedTile = puzzle.gameplayGrid._gridPuzzleTiles[columnIndex + rowIndex * puzzle.puzzleSizeX];
-        //We'll want to call this on a confirmed move. Right now, that's after every move.
+        assocatedTile = puzzle.gameplayGrid.GridPuzzleTiles[columnIndex + rowIndex * puzzle.puzzleSizeX];
     }
 
     /// <summary>
@@ -40,7 +41,7 @@ public class PuzzleTilePresenter : MonoBehaviour
     /// </summary>
     public void PositionSync()
     {
-        Vector3 newPos = new Vector3(assocatedTile._gridPosX * _currentGridSpacing + .5f, assocatedTile._gridPosY * _currentGridSpacing + .5f, 5);
+        Vector3 newPos = new Vector3(assocatedTile.GridPosX * _currentGridSpacing + .5f, assocatedTile.GridPosY * _currentGridSpacing + .5f, 5);
         this.transform.position = newPos;
     }
 
@@ -49,7 +50,7 @@ public class PuzzleTilePresenter : MonoBehaviour
     /// </summary>
     public void AppearanceSync()
     {
-        switch (assocatedTile.tileMatchType)
+        switch (assocatedTile.TileMatchType)
         {
             case EPuzzleTileMatchType.square:
                 spriteRenderer.sprite = puzzleTilePresenterManager.sprites[(int)EPuzzleTileMatchType.square];

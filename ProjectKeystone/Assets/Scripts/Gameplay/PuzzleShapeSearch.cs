@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PuzzleShapeSearch
 {
+    //Delarations so that we don't have to redeclare everytime a function is called. Searches are used often.
     ISearchable currentSearchable;
     PuzzleTile currentPuzzleTile;
     PuzzleTile childTile;
@@ -14,11 +15,12 @@ public class PuzzleShapeSearch
     /// <summary>
     /// Finds sets of tiles arranged in a vertical or horizontal line pattern of 4, and marks tiles in those patterns as match ready.
     /// </summary>
-    /// <param name="puzzleGrid"></param>
+    /// <param name="puzzleGrid">The PuzzleGrid object to search.</param>
     public void LineSearch(PuzzleGrid puzzleGrid, bool vertical)
     {        
-        Queue<ISearchable> searchables = PuzzleGridSearchSetup(puzzleGrid._gridPuzzleTiles);
+        Queue<ISearchable> searchables = PuzzleGridSearchSetup(puzzleGrid.GridPuzzleTiles);
 
+        //Search through whole grid, create match type "chains" of up to 4.
         while(searchables.Count > 0)
         {
             currentSearchable = searchables.Dequeue();
@@ -35,7 +37,7 @@ public class PuzzleShapeSearch
 
             if (childTile != null)
             {
-                if(currentPuzzleTile.tileMatchType == childTile.tileMatchType)
+                if(currentPuzzleTile.TileMatchType == childTile.TileMatchType)
                 {
                     //We don't want a chain longer than 4
                     if(SearchDepth(currentPuzzleTile) < 3)
@@ -59,7 +61,8 @@ public class PuzzleShapeSearch
             currentSearchable.wasSearched = true;
         }
 
-        foreach(PuzzleTile puzzleTile in puzzleGrid._gridPuzzleTiles)
+        //Sets chains that match the "vertical line" pattern to be "MatchReady". This part could be own function, allowing line search to also function as a hint mechanism?
+        foreach(PuzzleTile puzzleTile in puzzleGrid.GridPuzzleTiles)
         {
             //If the tile has a parent (meaning tile match)
             if(puzzleTile.parent != null)
@@ -70,11 +73,11 @@ public class PuzzleShapeSearch
                     currentPuzzleTile = puzzleTile;
                     while(currentPuzzleTile.parent != null)
                     {
-                        currentPuzzleTile.matchReady = true;
+                        currentPuzzleTile.MatchReady = true;
                         currentPuzzleTile = currentPuzzleTile.parent as PuzzleTile;
                     }
                     //make final parent match ready
-                    currentPuzzleTile.matchReady = true;
+                    currentPuzzleTile.MatchReady = true;
                 }
 
             }
@@ -83,15 +86,20 @@ public class PuzzleShapeSearch
 
     }
 
+    /// <summary>
+    /// Finds sets of 4 tiles arranged in a square pattern, and marks tiles in those patterns as match ready.
+    /// </summary>
+    /// <param name="puzzleGrid"></param>
     public void BoxSearch(PuzzleGrid puzzleGrid)
     {
-        Queue<ISearchable> searchables = PuzzleGridSearchSetup(puzzleGrid._gridPuzzleTiles);
+        Queue<ISearchable> searchables = PuzzleGridSearchSetup(puzzleGrid.GridPuzzleTiles);
+        throw new System.NotImplementedException("Box Search not yet implemented.");
     }
 
     /// <summary>
     /// Takes the puzzle tile list of a puzzle grid and readies it for a search by cleaning the searchables and seeding a queue.
     /// </summary>
-    /// <param name="puzzleTiles"></param>
+    /// <param name="puzzleTiles">The list of PuzzleTiles that represents the PuzzleGrid to make ready for a search.</param>
     /// <returns></returns>
     Queue<ISearchable> PuzzleGridSearchSetup(List<PuzzleTile> puzzleTiles)
     {
@@ -105,7 +113,7 @@ public class PuzzleShapeSearch
     /// <summary>
     /// Resets the searchables in a puzzleGrid.
     /// </summary>
-    /// <param name="searchables"></param>
+    /// <param name="searchables">The list of searchables to reset.</param>
     public void ResetPuzzleGridSearched(List<PuzzleTile> searchables)
     {
         foreach(ISearchable searchable in searchables)

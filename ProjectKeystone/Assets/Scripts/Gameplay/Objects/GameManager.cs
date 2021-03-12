@@ -11,6 +11,8 @@ public sealed class GameManager : MonoBehaviour
     public static GameObject StaticGameStateInstance;
     public static System.Random rand = new System.Random();
 
+    
+    // Used as constructor here. Singleton design.
     public void Awake()
     {
         if (StaticGameStateInstance == null)
@@ -24,6 +26,9 @@ public sealed class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Function to end game execution, in editor or standalone.
+    /// </summary>
     public void UnityApplicationQuit()
     {
         #if UNITY_EDITOR
