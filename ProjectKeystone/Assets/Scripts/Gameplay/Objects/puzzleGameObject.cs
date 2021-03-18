@@ -18,6 +18,7 @@ public class PuzzleGameObject : MonoBehaviour
     [Range(1,20)] public int puzzleSizeX;
     [Range(1,20)] public int puzzleSizeY;
     public float TimeLimit;
+    public float ComboTimer;
     public int ClearQuota;
 
     //Temp field, pre-gameManager implementation
@@ -29,7 +30,7 @@ public class PuzzleGameObject : MonoBehaviour
         gameplayGrid = new PuzzleGrid(puzzleSizeX, puzzleSizeY);
         puzzleCursor = new PuzzleCursor(puzzleSizeX, puzzleSizeY);
         searchSystem = new PuzzleShapeSearch();
-        puzzleState = new PuzzleState(NumberOfPlayers, ClearQuota, TimeLimit);
+        puzzleState = new PuzzleState(NumberOfPlayers, ClearQuota, TimeLimit, ComboTimer);
         mainCamera = FindObjectOfType<Camera>();
     }
 
@@ -48,6 +49,13 @@ public class PuzzleGameObject : MonoBehaviour
         if (puzzleState.IsInPlay)
         {
             puzzleState.AdjustTimeLeft(-Time.deltaTime);
+            foreach(PuzzlePlayer player in puzzleState.puzzlePlayers)
+            {
+                if (player.IsComboActive)
+                {
+                    player.AdjustComboTimer(-Time.deltaTime);
+                }
+            }
         }
     }
 }

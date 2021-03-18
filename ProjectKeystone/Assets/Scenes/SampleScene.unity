@@ -370,8 +370,9 @@ MonoBehaviour:
   cameraEdgeSpace: 2.5
   puzzleSizeX: 5
   puzzleSizeY: 5
-  TimeLimit: 60
-  ClearQuota: 0
+  TimeLimit: 30
+  ComboTimer: 8
+  ClearQuota: 10
   NumberOfPlayers: 1
 --- !u!4 &1417490277
 Transform:

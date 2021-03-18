@@ -16,6 +16,7 @@ public class PuzzleShapeSearch
     /// Finds sets of tiles arranged in a vertical or horizontal line pattern of 4, and marks tiles in those patterns as match ready.
     /// </summary>
     /// <param name="puzzleGrid">The PuzzleGrid object to search.</param>
+    /// <param name="vertical">True for a vertical line search, false for a horizontal line search.</param>
     public void LineSearch(PuzzleGrid puzzleGrid, bool vertical)
     {        
         Queue<ISearchable> searchables = PuzzleGridSearchSetup(puzzleGrid.GridPuzzleTiles);
@@ -100,7 +101,7 @@ public class PuzzleShapeSearch
     /// Takes the puzzle tile list of a puzzle grid and readies it for a search by cleaning the searchables and seeding a queue.
     /// </summary>
     /// <param name="puzzleTiles">The list of PuzzleTiles that represents the PuzzleGrid to make ready for a search.</param>
-    /// <returns></returns>
+    /// <returns>A queue of with an ISearchable PuzzleTile, ready for a PuzzleShapeSearch.</returns>
     Queue<ISearchable> PuzzleGridSearchSetup(List<PuzzleTile> puzzleTiles)
     {
         ResetPuzzleGridSearched(puzzleTiles);
@@ -127,7 +128,7 @@ public class PuzzleShapeSearch
     /// Calculates the search depth in an active search of the current given ISearchable.
     /// </summary>
     /// <param name="searchable">The ISearchable to find the current search depth for.</param>
-    /// <returns></returns>
+    /// <returns>An int representing the depth of the current search.</returns>
     int SearchDepth(ISearchable searchable)
     {
         ISearchable currentSearchable = searchable;

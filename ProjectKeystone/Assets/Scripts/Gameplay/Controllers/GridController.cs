@@ -61,7 +61,8 @@ public class GridController : MonoBehaviour
             {
                 currentPuzzleGrid.ShiftHorizontal(currentPuzzleCursor.GridPosY, -1);
             }
-
+            currentPuzzleState.SetPuzzleMoved();
+            AppearanceSyncAllTiles();
         }
         else if (Input.GetButtonDown(EInputAxis.Vertical.ToString()))
         {
@@ -75,8 +76,9 @@ public class GridController : MonoBehaviour
                 currentPuzzleGrid.ShiftVertical(currentPuzzleCursor.GridPosX, -1);
 
             }
+            currentPuzzleState.SetPuzzleMoved();
+            AppearanceSyncAllTiles();
         }
-        AppearanceSyncAllTiles();
     }
 
     /// <summary>
@@ -140,18 +142,25 @@ public class GridController : MonoBehaviour
     /// <param name="playerNumber">The player ID that input the submit command.</param>
     private void ClearTiles(int playerNumber)
     {
-        int scorePointsEarned = currentPuzzleState.CalculateScorePoints(currentPuzzleGrid.ClearMatchReadyTiles(), 
-            currentPuzzleState.puzzlePlayers[playerNumber].CurrentComboCount,
-            currentPuzzleState.puzzlePlayers[playerNumber].CurrentKeyComboCount);
-
-        //If points have been earned, a match has occured
-        if(scorePointsEarned > 0)
+        PuzzlePlayer invokingPlayer = currentPuzzleState.puzzlePlayers[playerNumber];
+        int clearedTiles = currentPuzzleGrid.ClearMatchReadyTiles();
+        if(clearedTiles > 0)
         {
-            currentPuzzleState.AddScorePointsToPlayer(playerNumber, scorePointsEarned);
-            currentPuzzleNextMatchQueue.AdvanceQueue();
-            AppearanceSyncAllTiles();
-        }
+            int matchesCleared = currentPuzzleState.CalculateMatchesCleared(clearedTiles, currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer[0]);
+            invokingPlayer.AddComboCount(matchesCleared);
+            if (!currentPuzzleState.PuzzleMovedSinceLastClear)
+            {
+                invokingPlayer.AddNoMovementClearCount(1);
+            }
 
+            currentPuzzleState.AddScorePointsToPlayer(playerNumber, currentPuzzleState.CalculateScorePoints(clearedTiles, invokingPlayer.CurrentComboCount, invokingPlayer.NoMovementClearCount));
+            currentPuzzleState.AddMatchPointsToPlayer(playerNumber, currentPuzzleState.CalculateMatchPoints(matchesCleared, invokingPlayer.CurrentComboCount, invokingPlayer.NoMovementClearCount));
+            invokingPlayer.SetMaxComboTime(currentPuzzleState.MaxComboTime);
+            currentPuzzleNextMatchQueue.AdvanceQueue();
+            currentPuzzleState.UnsetPuzzleMoved();
+            AppearanceSyncAllTiles();
+
+        }
     }
 
 
