@@ -90,7 +90,7 @@ public class PuzzlePlayer
     {
         _isComboActive = false;
         _currentComboCount = 0;
-        _noMovementClearCount = 1;
+        _noMovementClearCount = 0;
     }
 
     /// <summary>

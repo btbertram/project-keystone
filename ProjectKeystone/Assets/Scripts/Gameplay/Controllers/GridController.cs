@@ -13,6 +13,7 @@ public class GridController : MonoBehaviour
     PuzzleCursor currentPuzzleCursor;
     PuzzleShapeSearch currentSearchSystem;
     PuzzleNextMatchQueue currentPuzzleNextMatchQueue;
+    UIPuzzleObject currentUIPuzzleObject;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class GridController : MonoBehaviour
         currentPuzzleCursor = FindObjectOfType<PuzzleGameObject>().puzzleCursor;
         currentSearchSystem = FindObjectOfType<PuzzleGameObject>().searchSystem;
         currentPuzzleNextMatchQueue = currentPuzzleState.PuzzleNextMatchQueue;
+        currentUIPuzzleObject = FindObjectOfType<UIPuzzleObject>();
     }
 
     // Update is called once per frame
@@ -147,14 +149,21 @@ public class GridController : MonoBehaviour
         if(clearedTiles > 0)
         {
             int matchesCleared = currentPuzzleState.CalculateMatchesCleared(clearedTiles, currentPuzzleNextMatchQueue.puzzleSearchTypesMatchContainer[0]);
+
             invokingPlayer.AddComboCount(matchesCleared);
+            currentUIPuzzleObject.UpdatePlayerCombo(playerNumber);
+            
             if (!currentPuzzleState.PuzzleMovedSinceLastClear)
             {
                 invokingPlayer.AddNoMovementClearCount(1);
+                currentUIPuzzleObject.UpdatePlayerComboMultiplier(playerNumber);
             }
 
+            //Note that the combo counter starts at 0. Attempting to calculate points before the combo increase could result in no points gained, depending on score formula.
             currentPuzzleState.AddScorePointsToPlayer(playerNumber, currentPuzzleState.CalculateScorePoints(clearedTiles, invokingPlayer.CurrentComboCount, invokingPlayer.NoMovementClearCount));
+            currentUIPuzzleObject.UpdatePlayerScore(playerNumber);
             currentPuzzleState.AddMatchPointsToPlayer(playerNumber, currentPuzzleState.CalculateMatchPoints(matchesCleared, invokingPlayer.CurrentComboCount, invokingPlayer.NoMovementClearCount));
+            currentUIPuzzleObject.UpdatePlayerQuotaSliderMeter(playerNumber);
             invokingPlayer.SetMaxComboTime(currentPuzzleState.MaxComboTime);
             currentPuzzleNextMatchQueue.AdvanceQueue();
             currentPuzzleState.UnsetPuzzleMoved();

@@ -14,7 +14,7 @@ public class PuzzleState
     public int MatchPointGoalQuota { get => _matchPointGoalQuota; }
 
     float _timeLeft;
-    float TimeLeft { get => _timeLeft; }
+    public float TimeLeft { get => _timeLeft; }
 
     float _maxComboTime;
     public float MaxComboTime { get => _maxComboTime; }
