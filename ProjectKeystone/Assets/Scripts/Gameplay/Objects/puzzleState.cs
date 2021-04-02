@@ -192,6 +192,26 @@ public class PuzzleState
         }
     }
 
+
+    public void ResetPuzzleState(float timeLimit)
+    {
+        _timeLeft = timeLimit;
+        _puzzleMovedSinceLastClear = true;
+
+        //Flush the match queue
+        for (int x = 0; x < _puzzleNextMatchQueue.puzzleSearchTypesMatchContainer.Count; x++)
+        {
+            _puzzleNextMatchQueue.AdvanceQueue();
+        }
+
+        foreach (PuzzlePlayer puzzlePlayer in puzzlePlayers)
+        {
+            puzzlePlayer.ResetPlayer();
+        }
+
+        _isInPlay = true;
+    }
+
     //
     //Difficulty modifiers:
     //Allowed MatchTypes

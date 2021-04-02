@@ -90,6 +90,13 @@ public class PuzzleCursor
         }
     }
 
-
+    /// <summary>
+    /// Sets Cursor position back to 0,0 for resets and retries.
+    /// </summary>
+    public void ResetCursorPos()
+    {
+        _gridPosX = 0;
+        _gridPosY = 0;
+    }
 
 }

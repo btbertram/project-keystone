@@ -52,11 +52,4 @@ public class UIGameGeneral : MonoBehaviour
             resultsText.text = "Lose";
         }
     }
-    
-
-    public void ToggleCanvas()
-    {
-        _canvas.enabled = !_canvas.enabled;
-    }
-
 }

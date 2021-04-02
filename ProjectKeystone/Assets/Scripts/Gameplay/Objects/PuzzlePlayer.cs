@@ -111,5 +111,17 @@ public class PuzzlePlayer
         _noMovementClearCount += amount;
     }
 
+    /// <summary>
+    /// Sets a PuzzlePlayer's field values back to default.
+    /// Used for Resets/Retries.
+    /// </summary>
+    public void ResetPlayer()
+    {
+        _playerScorePoint = 0;
+        _playerMatchPoint = 0;
+        _comboTimer = 0;
+        ResetCombo();
+    }
+
 
 }

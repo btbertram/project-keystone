@@ -33,7 +33,7 @@ public class PuzzleTilePresenter : MonoBehaviour
     /// <param name="rowIndex">The y position of the PuzzleTile in the PuzzleGrid to associate with.</param>
     public void AssignTile(int columnIndex, int rowIndex)
     {
-        assocatedTile = puzzle.gameplayGrid.GridPuzzleTiles[columnIndex + rowIndex * puzzle.puzzleSizeX];
+        assocatedTile = puzzle.PObjectPuzzleGrid.GridPuzzleTiles[columnIndex + rowIndex * puzzle.puzzleSizeX];
     }
 
     /// <summary>

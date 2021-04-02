@@ -24,7 +24,6 @@ public class UIPuzzleObject : MonoBehaviour
     List<Image[]> _matchQueueImageArraysList;
 
     PuzzleGameObject _puzzleReference;
-    Camera _cameraReference;
     UIManipulationUtility _UIManipulation;
     public Sprite[] MatchShapeSpritesPrefabs;
 
@@ -32,7 +31,6 @@ public class UIPuzzleObject : MonoBehaviour
     {
         PuzzleUICanvas = this.transform.GetComponent<Canvas>();
         _puzzleReference = FindObjectOfType<PuzzleGameObject>();
-        _cameraReference = FindObjectOfType<Camera>();
         _UIManipulation = new UIManipulationUtility();
         _playerHudList = new List<GameObject>(2);
         _playerScoreTextList = new List<Text>(2);
@@ -53,7 +51,7 @@ public class UIPuzzleObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_puzzleReference.puzzleState.IsInPlay)
+        if (_puzzleReference.PObjectPuzzleState.IsInPlay)
         {
             UpdateTimer();
         }
@@ -68,12 +66,12 @@ public class UIPuzzleObject : MonoBehaviour
         _timerTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, 0, _timerTransform.rect.height);
         
         _timerText = _timerUI.GetComponentInChildren<Text>();
-        _timerText.text = _puzzleReference.puzzleState.TimeLeft.ToString();
+        _timerText.text = _puzzleReference.PObjectPuzzleState.TimeLeft.ToString();
     }
 
     void UpdateTimer()
     {
-        _timerText.text = _puzzleReference.puzzleState.TimeLeft.ToString();       
+        _timerText.text = _puzzleReference.PObjectPuzzleState.TimeLeft.ToString();       
     }
 
     void PlayerPuzzleHudSetup(int numberOfPlayers)
@@ -139,28 +137,28 @@ public class UIPuzzleObject : MonoBehaviour
 
     public void UpdatePlayerScore(int playerIndexNumber)
     {
-        _playerScoreTextList[playerIndexNumber].text = _puzzleReference.puzzleState.puzzlePlayers[playerIndexNumber].PlayerScorePoint.ToString();        
+        _playerScoreTextList[playerIndexNumber].text = _puzzleReference.PObjectPuzzleState.puzzlePlayers[playerIndexNumber].PlayerScorePoint.ToString();        
     }
 
     public void UpdatePlayerCombo(int playerIndexNumber)
     {
-        _playerComboCountTextList[playerIndexNumber].text = _puzzleReference.puzzleState.puzzlePlayers[playerIndexNumber].CurrentComboCount.ToString();
+        _playerComboCountTextList[playerIndexNumber].text = _puzzleReference.PObjectPuzzleState.puzzlePlayers[playerIndexNumber].CurrentComboCount.ToString();
     }
 
     public void UpdatePlayerComboMultiplier(int playerIndexNumber)
     {
-        _playerComboMultiplierTextList[playerIndexNumber].text = _puzzleReference.puzzleState.puzzlePlayers[playerIndexNumber].NoMovementClearCount.ToString();
+        _playerComboMultiplierTextList[playerIndexNumber].text = _puzzleReference.PObjectPuzzleState.puzzlePlayers[playerIndexNumber].NoMovementClearCount.ToString();
     }
 
     public void UpdatePlayerQuotaSliderMeter(int playerIndexNumber)
     {
-        _playerQuotaMeterSliderList[playerIndexNumber].value = (float)_puzzleReference.puzzleState.puzzlePlayers[playerIndexNumber].PlayerMatchPoint / (float)_puzzleReference.puzzleState.MatchPointGoalQuota;
+        _playerQuotaMeterSliderList[playerIndexNumber].value = (float)_puzzleReference.PObjectPuzzleState.puzzlePlayers[playerIndexNumber].PlayerMatchPoint / (float)_puzzleReference.PObjectPuzzleState.MatchPointGoalQuota;
     }
 
     public void UpdatePlayerMatchQueue(int playerIndexNumber)
     {
         //Temp assignment to make work, since we don't yet have player based match queues (just a single puzzle based one)
-        var test = _puzzleReference.puzzleState.PuzzleNextMatchQueue.puzzleSearchTypesMatchContainer;
+        var test = _puzzleReference.PObjectPuzzleState.PuzzleNextMatchQueue.puzzleSearchTypesMatchContainer;
 
         for (int x = 0; x < _matchQueueImageArraysList[playerIndexNumber].Length; x++)
         {
@@ -168,6 +166,19 @@ public class UIPuzzleObject : MonoBehaviour
             _matchQueueImageArraysList[playerIndexNumber][x].sprite = MatchShapeSpritesPrefabs[(int)test[x]];
         }
 
+    }
+
+    /// <summary>
+    /// Calls all the UpdatePlayer UI Element functions to refresh the entire player HUD.
+    /// </summary>
+    /// <param name="playerIndexNumber"></param>
+    public void UpdatePlayerAllElements(int playerIndexNumber)
+    {
+        UpdatePlayerScore(playerIndexNumber);
+        UpdatePlayerCombo(playerIndexNumber);
+        UpdatePlayerComboMultiplier(playerIndexNumber);
+        UpdatePlayerQuotaSliderMeter(playerIndexNumber);
+        UpdatePlayerMatchQueue(playerIndexNumber);
     }
 
 }

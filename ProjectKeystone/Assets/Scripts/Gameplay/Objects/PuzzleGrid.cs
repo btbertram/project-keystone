@@ -250,4 +250,17 @@ public class PuzzleGrid
         }
         return tilesCleared;
     }
+
+    /// <summary>
+    /// Returns the grid to default values. Used for reseting the game state to the start without reloading the scene.
+    /// This randomizes all the TileMatchTypes in the _gridPuzzleTiles Collection.
+    /// </summary>
+    public void ResetGrid()
+    {
+        foreach(PuzzleTile tile in _gridPuzzleTiles)
+        {
+            tile.TileMatchTypeReroll();
+        }
+    }
+
 }
