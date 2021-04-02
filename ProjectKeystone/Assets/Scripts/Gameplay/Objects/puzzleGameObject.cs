@@ -12,7 +12,8 @@ public class PuzzleGameObject : MonoBehaviour
     public PuzzleGrid gameplayGrid;
     public PuzzleCursor puzzleCursor;
     public PuzzleShapeSearch searchSystem;
-    UIPuzzleObject UIPuzzleObject;
+    UIPuzzleObject uiPuzzleObject;
+    UIGameGeneral uiGameGeneral;
     public float cameraEdgeSpace = 2.5f;
     Camera mainCamera;
 
@@ -33,7 +34,8 @@ public class PuzzleGameObject : MonoBehaviour
         searchSystem = new PuzzleShapeSearch();
         puzzleState = new PuzzleState(NumberOfPlayers, ClearQuota, TimeLimit, ComboTimer);
         mainCamera = FindObjectOfType<Camera>();
-        UIPuzzleObject = FindObjectOfType<UIPuzzleObject>();
+        uiPuzzleObject = FindObjectOfType<UIPuzzleObject>();
+        uiGameGeneral = FindObjectOfType<UIGameGeneral>();
     }
 
     void Start()
@@ -58,10 +60,17 @@ public class PuzzleGameObject : MonoBehaviour
                     puzzleState.puzzlePlayers[x].AdjustComboTimer(-Time.deltaTime);
                     if (!puzzleState.puzzlePlayers[x].IsComboActive)
                     {
-                        UIPuzzleObject.UpdatePlayerCombo(x);
+                        uiPuzzleObject.UpdatePlayerCombo(x);
                     }
                 }
             }
+        }
+        else if(!uiGameGeneral.GeneralGameCanvas.enabled)
+        {
+
+            uiGameGeneral.ToggleCanvas();
+            uiGameGeneral.SetupEndScreen(puzzleState.puzzlePlayers[0].PlayerMatchPoint, ClearQuota, puzzleState.puzzlePlayers[0].PlayerScorePoint);
+
         }
     }
 }

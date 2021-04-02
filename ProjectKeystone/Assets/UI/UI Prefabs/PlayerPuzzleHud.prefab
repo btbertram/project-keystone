@@ -719,6 +719,7 @@ GameObject:
   - component: {fileID: 7768114250233126816}
   - component: {fileID: 7768114250233126831}
   - component: {fileID: 7768114250233126817}
+  - component: {fileID: 9063354710116574390}
   m_Layer: 5
   m_Name: PlayerPuzzleHud
   m_TagString: Untagged
@@ -812,6 +813,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &9063354710116574390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7768114250233126829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3335978bc8c8914388db3395af4cf05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerNumberImageGameObject: {fileID: 5829385216460496236}
+  QuotaMeterGameObject: {fileID: 7768114249546582758}
+  ScoreTextGameObject: {fileID: 7768114250745379096}
+  ComboCountTextGameObject: {fileID: 6491850033997792272}
+  ComboMultiplierTextGameObject: {fileID: 7768114250775834856}
 --- !u!1 &7768114250745379096
 GameObject:
   m_ObjectHideFlags: 0

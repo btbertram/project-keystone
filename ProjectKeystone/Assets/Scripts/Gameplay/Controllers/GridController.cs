@@ -166,6 +166,7 @@ public class GridController : MonoBehaviour
             currentUIPuzzleObject.UpdatePlayerQuotaSliderMeter(playerNumber);
             invokingPlayer.SetMaxComboTime(currentPuzzleState.MaxComboTime);
             currentPuzzleNextMatchQueue.AdvanceQueue();
+            currentUIPuzzleObject.UpdatePlayerMatchQueue(playerNumber);
             currentPuzzleState.UnsetPuzzleMoved();
             AppearanceSyncAllTiles();
 
