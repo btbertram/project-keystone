@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// A MonoBehaviour Script for the General UI, such as an end results screen, pause menu, etc for the in game scene.
@@ -51,5 +52,6 @@ public class UIGameGeneral : MonoBehaviour
         {
             resultsText.text = "Lose";
         }
+        EventSystem.current.SetSelectedGameObject(_canvas.gameObject);
     }
 }

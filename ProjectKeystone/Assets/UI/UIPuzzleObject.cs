@@ -80,7 +80,7 @@ public class UIPuzzleObject : MonoBehaviour
         {
             _playerHudList.Add(Instantiate(PlayerHudPrefab, PuzzleUICanvas.transform));
             var _hudTransform = _playerHudList[x].GetComponent<RectTransform>();
-            _UIManipulation.SetRectTransformSizeToScreenScale(_hudTransform, .3f, .4f);
+            _UIManipulation.SetRectTransformSizeToScreenScale(_hudTransform, .15f, .4f);
 
             var _playerScoreText = _playerHudList[x].GetComponent<UIHudReferences>().ScoreTextGameObject.GetComponent<Text>();
             _playerScoreTextList.Add(_playerScoreText);
@@ -95,6 +95,7 @@ public class UIPuzzleObject : MonoBehaviour
             UpdatePlayerComboMultiplier(x);
 
             var _playerQuotaMeterSlider = _playerHudList[x].GetComponentInChildren<UIHudReferences>().QuotaMeterGameObject.GetComponent<Slider>();
+            _playerQuotaMeterSlider.interactable = false;
             _playerQuotaMeterSliderList.Add(_playerQuotaMeterSlider);
             UpdatePlayerQuotaSliderMeter(x);
 
